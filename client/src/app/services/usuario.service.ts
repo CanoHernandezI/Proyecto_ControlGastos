@@ -12,6 +12,12 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
+ // getTipoUsuario(Id: string): Observable<number> {
+   // return this.http.get<{ tipoUsuario: number }>(`${this.API_URI}/tipoUsuario${Id}`).pipe(
+     // map(response => response.tipoUsuario)
+    //);
+  //}
+
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<{ usuarios: Usuario[] }>(`${this.API_URI}/`).pipe(
       map(response => response.usuarios)
@@ -21,16 +27,14 @@ export class UsuarioService {
   createUser(usuario: Usuario): Observable<any> {
     return this.http.post(`${this.API_URI}/`, usuario);
   }
-
+  
   checkUsername(Usuario: string): Observable<boolean> {
     return this.http.get<{ exists: boolean }>(`${this.API_URI}/${Usuario}`).pipe(
-      map(response => response.exists)
+        map(response => response.exists)
     );
-  }
+}
 
-  getUsuarioPorId(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.API_URI}/${id}`);
-  }
-
-
+getUsuarioPorId(id: string): Observable<Usuario> {
+  return this.http.get<Usuario>(`${this.API_URI}/${id}`);
+}
 }

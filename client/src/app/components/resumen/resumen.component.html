@@ -34,7 +34,6 @@
               <th>Información</th>
               <th>Monto</th>
               <th>Fecha</th>
-              <th *ngIf="rolUsuario === 'admin'">Usuario al que pertenece</th>
             </tr>
           </thead>
           <tbody>
@@ -43,7 +42,6 @@
               <td>{{ item.Descripcion || item.OrigenIngreso || item.Producto }}</td>
               <td>$ {{ item.Monto }}</td>
               <td>{{ item.FechaTransaccion || item.FechaIngreso || item.FechaServicio | date }}</td>
-              <td *ngIf="rolUsuario === 'admin'">{{ item.NombreCompleto }}</td>
             </tr>
           </tbody>
         </table>

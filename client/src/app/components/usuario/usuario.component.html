@@ -41,13 +41,13 @@
                         <ul class="lista-datos">
                             <li><i class="icono fas fa-envelope"></i> Dirección de usuario: {{ usuario?.Correo || 'No disponible' }}</li>
                             <li><i class="icono fas fa-phone-alt"></i> Teléfono: {{ usuario?.NumTelefono || 'No disponible' }}</li>
-                            <li><i class="icono fas fa-user"></i> Rol: {{ usuario?.Rol || 'No disponible' }}</li>
+                            <li><i class="icono fas fa-user"></i> Tipo de usuario:<br> {{ usuario?.TipoUsuario == "1" ? 'Administrador' : usuario?.TipoUsuario == "2" ? 'Usuario básico' : 'No disponible' }}</li>
                         </ul>
                         <ul class="lista-datos">
                             <li><i class="icono fas fa-calendar-alt"></i> Fecha de nacimiento: {{ usuario?.FechaNacimiento || 'No disponible' }}</li>
                             <li><i class="icono fas fa-user"></i> Usuario: {{ usuario?.Usuario || 'No disponible' }}</li>
+                            <li><i class="icono fas fa-user"></i> Identificador de grupo de usuarios: {{ usuario?.GrupoUsuario || 'No disponible' }}</li>
                         </ul>
-                            <li *ngIf="usuario?.Rol === 'admin'" style="margin-top: 20px;"><i class="fas fa-users"></i> Codigo: {{ usuario?.CodigoAdmin || 'No disponible' }}</li>
                     </div>
                 </div>
             </section>

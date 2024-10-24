@@ -21,9 +21,8 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ResumenComponent } from './components/resumen/resumen.component';
 import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-tecnico.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
-import { PaypalComponent } from './components/paypal/paypal.component';
-import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
+import { FinanzasComponent } from './components/finanzas/finanzas.component';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localeEs, 'es');
 
@@ -42,15 +41,17 @@ registerLocaleData(localeEs, 'es');
         UsuarioComponent,
         ResumenComponent,
         SoporteTecnicoComponent,
-        UbicacionComponent,
-        PaypalComponent,
-        TarjetaComponent,
+        FinanzasComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], 
+    
+    imports: [BrowserModule,
+        HttpClientModule,  // Importa HttpClientModule aquí
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule,
-    GoogleMapsModule], providers: [
+        ReactiveFormsModule, GoogleMapsModule],
+
+    providers: [
         { provide: LOCALE_ID, useValue: 'es' },
         provideHttpClient(withFetch()),
         provideHttpClient(withInterceptorsFromDi())

@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { IngresosService } from '../../services/ingresos.service';
 import { PresupuestosService } from '../../services/presupuestos.service';
 import { Router } from '@angular/router';
@@ -14,31 +13,22 @@ export class IngresoListComponent implements OnInit {
   ingresos: any = [];
   notificationMessage: string | null = null;
   idUsuario: string | null = null;
-  rolUsuario: string | null = null; 
   presupuestos: any = [];
 
   constructor(
     private ingresosService: IngresosService,
     private presupuestosService: PresupuestosService,
     private router: Router,
-    private notificationService: NotificationService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.idUsuario = localStorage.getItem('IdUsuario');
-      this.rolUsuario = localStorage.getItem('RolUsuario'); 
-
-      if (this.idUsuario) {
-        this.loadIngresos(this.rolUsuario);
-        this.loadPresupuestos();
-      } else {
-        console.error('Usuario no autenticado');
-        this.router.navigate(['/login']);
-      }
+    this.idUsuario = localStorage.getItem('IdUsuario');
+    if (this.idUsuario) {
+      this.loadIngresos();
+      this.loadPresupuestos();
     } else {
-      console.warn('No se puede acceder a localStorage en el lado del servidor.');
+      console.error('Usuario no autenticado');
       this.router.navigate(['/login']);
     }
 
@@ -47,15 +37,11 @@ export class IngresoListComponent implements OnInit {
     });
   }
 
-  loadIngresos(rolUsuario: string | null) {
+  loadIngresos() {
     if (this.idUsuario) {
       this.ingresosService.getIngresos(this.idUsuario).subscribe(
         (resp: any) => {
-          if (rolUsuario === 'admin') {
-            this.ingresos = resp; 
-          } else {
-            this.ingresos = resp; 
-          }
+          this.ingresos = resp;
         },
         err => console.log(err)
       );
@@ -64,36 +50,21 @@ export class IngresoListComponent implements OnInit {
 
   deleteIngreso(id: number) {
     if (this.idUsuario) {
-      if (this.rolUsuario === 'admin') {
-        this.ingresosService.deleteIngreso(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.ingresos = this.ingresos.filter((ingreso: any) => ingreso.IdIngreso !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Ingreso eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      } else {
-        this.ingresosService.deleteIngreso(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.ingresos = this.ingresos.filter((ingreso: any) => ingreso.IdIngreso !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Ingreso eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      }
+      this.ingresosService.deleteIngreso(id.toString(), this.idUsuario).subscribe(
+        () => {
+          this.ingresos = this.ingresos.filter((ingreso: any) => ingreso.IdIngreso !== id);
+          this.loadPresupuestos();
+          this.notificationService.showNotification('Ingreso eliminado correctamente');
+        },
+        err => console.log(err)
+      );
     }
   }
 
   editIngreso(id: number) {
-    if (this.rolUsuario === 'admin') {
-      this.router.navigate(['/ingresos/edit', id]);
-    } else {
-      this.router.navigate(['/ingresos/edit', id]);
-    }
+    this.router.navigate(['/ingresos/edit', id]);
   }
-
+  
   loadPresupuestos() {
     if (this.idUsuario) {
       this.presupuestosService.getPresupuestos(this.idUsuario).subscribe(

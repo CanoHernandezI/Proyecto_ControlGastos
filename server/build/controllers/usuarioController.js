@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usuarioController = void 0;
 const database_1 = __importDefault(require("../database"));
-const uuid_1 = require("uuid");
 class UsuarioController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -25,28 +24,12 @@ class UsuarioController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin } = req.body;
-                if (Rol === 'admin') {
-                    const nuevoCodigo = (0, uuid_1.v4)();
-                    yield database_1.default.query('INSERT INTO Usuario set ?', [{ Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin: nuevoCodigo }]);
-                    res.json({ message: 'Administrador creado con éxito', codigo: nuevoCodigo });
-                }
-                else if (Rol === 'normal') {
-                    const admin = yield database_1.default.query('SELECT * FROM Usuario WHERE CodigoAdmin = ? AND Rol = "admin"', [CodigoAdmin]);
-                    if (admin.length > 0) {
-                        yield database_1.default.query('INSERT INTO Usuario set ?', [{ Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin }]);
-                        res.json({ message: 'Usuario normal creado con éxito' });
-                    }
-                    else {
-                        res.status(400).json({ error: 'Código de administrador inválido' });
-                    }
-                }
-                else {
-                    res.status(400).json({ error: 'Rol no especificado o inválido' });
-                }
+                console.log(req.body);
+                yield database_1.default.query('INSERT INTO Usuario set ?', [req.body]);
+                res.json({ message: 'User Saved' });
             }
             catch (err) {
-                console.error('error al crear usario', err);
+                res.status(500).json({ error: 'Error al crear usuario' });
             }
         });
     }
@@ -54,14 +37,14 @@ class UsuarioController {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUser } = req.params;
             yield database_1.default.query('DELETE FROM Usuario WHERE IdUsuario = ?', [idUser]);
-            res.json({ message: 'El usuario fue eliminado' });
+            res.json({ message: 'The user was deleted' });
         });
     }
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUser } = req.params;
             yield database_1.default.query('UPDATE Usuario set ? WHERE IdUsuario = ?', [req.body, idUser]);
-            res.json({ message: 'El usuario fue actualizado' });
+            res.json({ message: 'The user was updated' });
         });
     }
     getUserOrCheckUsername(req, res) {
@@ -82,7 +65,7 @@ class UsuarioController {
                     res.json(usuario[0]);
                 }
                 else {
-                    res.status(404).json({ message: 'Usuario no encontrado' });
+                    res.status(404).json({ message: 'User not found' });
                 }
             }
         });

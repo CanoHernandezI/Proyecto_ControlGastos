@@ -12,9 +12,6 @@ const gastoRoutes_1 = __importDefault(require("./routes/gastoRoutes"));
 const ingresoRoutes_1 = __importDefault(require("./routes/ingresoRoutes"));
 const servicioRoutes_1 = __importDefault(require("./routes/servicioRoutes"));
 const presupuestoRoutes_1 = __importDefault(require("./routes/presupuestoRoutes"));
-const ubicacionRoutes_1 = __importDefault(require("./routes/ubicacionRoutes"));
-const twitterRoutes_1 = __importDefault(require("./routes/twitterRoutes"));
-const tarjetaRoutes_1 = __importDefault(require("./routes/tarjetaRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -35,9 +32,6 @@ class Server {
         this.app.use('/api/ingreso', ingresoRoutes_1.default);
         this.app.use('/api/servicio', servicioRoutes_1.default);
         this.app.use('/api/presupuesto', presupuestoRoutes_1.default);
-        this.app.use('/api/ubicacion', ubicacionRoutes_1.default);
-        this.app.use('/api/twitter', twitterRoutes_1.default);
-        this.app.use('/api/tarjetas', tarjetaRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

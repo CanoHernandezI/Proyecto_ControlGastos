@@ -14,7 +14,6 @@ export class GastoListComponent implements OnInit {
   gastos: any = [];
   notificationMessage: string | null = null;
   idUsuario: string | null = null;
-  rolUsuario: string | null = null;
   presupuestos: any = [];
 
   constructor(
@@ -23,15 +22,13 @@ export class GastoListComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.idUsuario = localStorage.getItem('IdUsuario');
-      this.rolUsuario = localStorage.getItem('RolUsuario');
-
       if (this.idUsuario) {
-        this.loadGastos(this.rolUsuario);
+        this.loadGastos();
         this.loadPresupuestos();
       } else {
         console.error('Usuario no autenticado');
@@ -47,15 +44,11 @@ export class GastoListComponent implements OnInit {
     });
   }
 
-  loadGastos(rolUsuario: string | null) {
+  loadGastos() {
     if (this.idUsuario) {
       this.gastosService.getGastos(this.idUsuario).subscribe(
         (resp: any) => {
-          if (rolUsuario === 'admin') {
-            this.gastos = resp;
-          } else {
-            this.gastos = resp; 
-          }
+          this.gastos = resp;
         },
         err => console.log(err)
       );
@@ -64,34 +57,19 @@ export class GastoListComponent implements OnInit {
 
   deleteGasto(id: number) {
     if (this.idUsuario) {
-      if (this.rolUsuario === 'admin') {
-        this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Gasto eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      } else {
-        this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Gasto eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      }
+      this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
+        () => {
+          this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
+          this.loadPresupuestos();
+          this.notificationService.showNotification('Gasto eliminado correctamente');
+        },
+        err => console.log(err)
+      );
     }
-  }
+  }  
 
   editGasto(id: number) {
-    if (this.rolUsuario === 'admin') {
-      this.router.navigate(['/gastos/edit', id]);
-    } else {
-      this.router.navigate(['/gastos/edit', id]);
-    }
+    this.router.navigate(['/gastos/edit', id]);
   }
 
   loadPresupuestos() {

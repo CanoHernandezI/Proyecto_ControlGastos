@@ -48,8 +48,7 @@
                                 <th>Estado</th>
                                 <th>Monto</th>
                                 <th>Fecha de servicio</th>
-                                <th *ngIf="rolUsuario === 'admin'">Nombre</th>
-                                <th *ngIf="rolUsuario === 'admin'">Acciones</th>
+                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,8 +59,7 @@
                                 <td>{{ servicio.Estado }}</td>
                                 <td>$ {{ servicio.Monto }}</td>
                                 <td>{{ servicio.FechaServicio | date }}</td>
-                                <td *ngIf="rolUsuario === 'admin'" >{{ servicio.NombreCompleto }}</td>
-                                <td *ngIf="rolUsuario === 'admin'">
+                                <td>
                                     <button class="edit-button" (click)="editServicio(servicio.IdServicio)"><i class="fas fa-edit"></i></button> 
                                     <button class="delete-button" (click)="deleteServicio(servicio.IdServicio)" ><i class="fas fa-trash-alt"></i></button>
                                 </td>                            

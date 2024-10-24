@@ -1,15 +1,12 @@
 import express, { Application } from 'express';
 import indexRoutes from './routes/indexRoutes';
 import usuarioRoutes from './routes/usuarioRoutes';
-import morgan from 'morgan';
-import cors from 'cors';
 import gastoRoutes from './routes/gastoRoutes';
 import ingresoRoutes from './routes/ingresoRoutes';
 import servicioRoutes from './routes/servicioRoutes';
 import presupuestoRoutes from './routes/presupuestoRoutes';
-import ubicacionRoutes from './routes/ubicacionRoutes';
-import twitterRoutes from './routes/twitterRoutes'; 
-import tarjetaRoutes from './routes/tarjetaRoutes';
+import morgan from 'morgan';
+import cors from 'cors';
 
 class Server {
     public app: Application;
@@ -35,9 +32,6 @@ class Server {
         this.app.use('/api/ingreso', ingresoRoutes);
         this.app.use('/api/servicio', servicioRoutes);
         this.app.use('/api/presupuesto', presupuestoRoutes);
-        this.app.use('/api/ubicacion', ubicacionRoutes);
-        this.app.use('/api/twitter', twitterRoutes);
-        this.app.use('/api/tarjetas', tarjetaRoutes);
     }
 
     start(): void {

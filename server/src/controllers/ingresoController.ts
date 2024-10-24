@@ -4,42 +4,10 @@ import pool from '../database';
 class IngresoController {
   public async list(req: Request, res: Response): Promise<void> {
     const { idUser } = req.params;
-
     try {
-      const usuario = await pool.query('SELECT * FROM Usuario WHERE IdUsuario = ?', [idUser]);
-
-      if (usuario.length === 0) {
-        res.status(404).json({ error: 'Usuario no encontrado' });
-        return;
-      }
-
-      const { Rol, CodigoAdmin } = usuario[0];
-
-      let query: string;
-      let params: any[];
-
-      if (Rol === 'admin') {
-        query = `
-          SELECT I.*, CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompleto
-          FROM Ingreso I 
-          INNER JOIN Usuario U ON I.IdUsuario = U.IdUsuario 
-          WHERE U.CodigoAdmin = ?
-        `;
-        params = [CodigoAdmin];
-      } else {
-        query = `
-          SELECT I.*, CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompleto
-          FROM Ingreso I 
-          INNER JOIN Usuario U ON I.IdUsuario = U.IdUsuario 
-          WHERE I.IdUsuario = ?
-        `;
-        params = [idUser];
-      }
-
-      const ingresos = await pool.query(query, params);
+      const ingresos = await pool.query('SELECT * FROM Ingreso WHERE IdUsuario = ?', [idUser]);
       res.json({ ingresos });
     } catch (err) {
-      console.error(err);
       res.status(500).json({ error: 'Error al obtener los ingresos' });
     }
   }
@@ -47,44 +15,26 @@ class IngresoController {
   public async create(req: Request, res: Response): Promise<void> {
     const { idUser } = req.params;
     const ingreso = req.body;
+
+    console.log('IdUsuario:', idUser);
+    console.log('Ingreso:', ingreso);
+
     ingreso.IdUsuario = idUser;
 
     try {
       await pool.query('INSERT INTO Ingreso SET ?', [ingreso]);
       res.json({ message: 'Ingreso guardado' });
     } catch (err) {
-      console.error(err);
       res.status(500).json({ error: 'Error al crear el ingreso' });
     }
   }
 
   public async delete(req: Request, res: Response): Promise<void> {
     const { id, idUser } = req.params;
-
     try {
-      const usuario = await pool.query('SELECT * FROM Usuario WHERE IdUsuario = ?', [idUser]);
-
-      if (usuario.length === 0) {
-        res.status(404).json({ error: 'Usuario no encontrado' });
-        return;
-      }
-
-      const { Rol, CodigoAdmin } = usuario[0];
-
-      let result;
-      if (Rol === 'admin') {
-        result = await pool.query('DELETE FROM Ingreso WHERE IdIngreso = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Ingreso.IdUsuario AND CodigoAdmin = ?)', [id, CodigoAdmin]);
-      } else {
-        result = await pool.query('DELETE FROM Ingreso WHERE IdIngreso = ? AND IdUsuario = ?', [id, idUser]);
-      }
-
-      if (result.affectedRows > 0) {
-        res.json({ message: 'Ingreso eliminado' });
-      } else {
-        res.status(404).json({ error: 'Ingreso no encontrado o el usuario no coincide' });
-      }
+      await pool.query('DELETE FROM Ingreso WHERE IdIngreso = ? AND IdUsuario = ?', [id, idUser]);
+      res.json({ message: 'El ingreso fue eliminado' });
     } catch (err) {
-      console.error(err);
       res.status(500).json({ error: 'Error al eliminar el ingreso' });
     }
   }
@@ -93,72 +43,34 @@ class IngresoController {
     const { id, idUser } = req.params;
     const ingreso = req.body;
 
+    console.log('IdIngreso:', id);
+    console.log('IdUsuario:', idUser);
+    console.log('Ingreso:', ingreso);
+
     try {
-      const usuario = await pool.query('SELECT * FROM Usuario WHERE IdUsuario = ?', [idUser]);
-
-      if (usuario.length === 0) {
-        res.status(404).json({ error: 'Usuario no encontrado' });
-        return;
-      }
-
-      const { Rol, CodigoAdmin } = usuario[0];
-
-      let result;
-      if (Rol === 'admin') {
-        result = await pool.query('UPDATE Ingreso SET ? WHERE IdIngreso = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Ingreso.IdUsuario AND CodigoAdmin = ?)', [ingreso, id, CodigoAdmin]);
-      } else {
-        result = await pool.query('UPDATE Ingreso SET ? WHERE IdIngreso = ? AND IdUsuario = ?', [ingreso, id, idUser]);
-      }
-
+      const result = await pool.query('UPDATE Ingreso SET ? WHERE IdIngreso = ? AND IdUsuario = ?', [ingreso, id, idUser]);
       if (result.affectedRows > 0) {
-        res.json({ message: 'Ingreso actualizado' });
+        res.json({ message: 'El ingreso fue actualizado' });
       } else {
-        res.status(404).json({ error: 'Ingreso no encontrado o el usuario no coincide' });
+        res.status(404).json({ error: 'El ingreso no fue encontrado o el usuario no coincide' });
       }
     } catch (err) {
-      console.error(err);
       res.status(500).json({ error: 'Error al actualizar el ingreso' });
     }
   }
 
   public async getOne(req: Request, res: Response): Promise<void> {
     const { id, idUser } = req.params;
-
     try {
-      const usuario = await pool.query('SELECT * FROM Usuario WHERE IdUsuario = ?', [idUser]);
-
-      if (usuario.length === 0) {
-        res.status(404).json({ error: 'Usuario no encontrado' });
-        return;
-      }
-
-      const { Rol, CodigoAdmin } = usuario[0];
-
-      let query;
-      let params;
-
-      if (Rol === 'admin') {
-        query = `
-          SELECT * FROM Ingreso WHERE IdIngreso = ? AND EXISTS (
-            SELECT 1 FROM Usuario WHERE IdUsuario = Ingreso.IdUsuario AND CodigoAdmin = ?
-          )
-        `;
-        params = [id, CodigoAdmin];
-      } else {
-        query = 'SELECT * FROM Ingreso WHERE IdIngreso = ? AND IdUsuario = ?';
-        params = [id, idUser];
-      }
-
-      const ingreso = await pool.query(query, params);
-
+      const ingreso = await pool.query('SELECT * FROM Ingreso WHERE IdIngreso = ? AND IdUsuario = ?', [id, idUser]);
       if (ingreso.length > 0) {
+        // Convertir FechaIngreso a YYYY-MM-DD
         ingreso[0].FechaIngreso = ingreso[0].FechaIngreso.toISOString().split('T')[0];
         res.json(ingreso[0]);
       } else {
-        res.status(404).json({ text: 'El ingreso no existe o no tiene acceso' });
+        res.status(404).json({ text: 'El ingreso no existe' });
       }
     } catch (err) {
-      console.error(err);
       res.status(500).json({ error: 'Error al obtener el ingreso' });
     }
   }

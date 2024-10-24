@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from '../../services/servicios.service';
 import { PresupuestosService } from '../../services/presupuestos.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
+
 
 @Component({
   selector: 'app-servicio-list',
@@ -14,7 +14,6 @@ export class ServicioListComponent implements OnInit {
   servicios: any = [];
   notificationMessage: string | null = null;
   idUsuario: string | null = null;
-  rolUsuario: string | null = null; 
   presupuestos: any = [];
 
   constructor(
@@ -22,23 +21,15 @@ export class ServicioListComponent implements OnInit {
     private presupuestosService: PresupuestosService,
     private router: Router,
     private notificationService: NotificationService,
-    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.idUsuario = localStorage.getItem('IdUsuario');
-      this.rolUsuario = localStorage.getItem('RolUsuario'); 
-
-      if (this.idUsuario) {
-        this.loadServicios(this.rolUsuario);
-        this.loadPresupuestos();
-      } else {
-        console.error('Usuario no autenticado');
-        this.router.navigate(['/login']);
-      }
+    this.idUsuario = localStorage.getItem('IdUsuario');
+    if (this.idUsuario) {
+      this.loadServicios();
+      this.loadPresupuestos();
     } else {
-      console.warn('No se puede acceder a localStorage en el lado del servidor.');
+      console.error('Usuario no autenticado');
       this.router.navigate(['/login']);
     }
 
@@ -47,15 +38,11 @@ export class ServicioListComponent implements OnInit {
     });
   }
 
-  loadServicios(rolUsuario: string | null) {
+  loadServicios() {
     if (this.idUsuario) {
       this.serviciosService.getServicios(this.idUsuario).subscribe(
         (resp: any) => {
-          if (rolUsuario === 'admin') {
-            this.servicios = resp; 
-          } else {
-            this.servicios = resp; 
-          }
+          this.servicios = resp;
         },
         err => console.log(err)
       );
@@ -64,34 +51,19 @@ export class ServicioListComponent implements OnInit {
 
   deleteServicio(id: number) {
     if (this.idUsuario) {
-      if (this.rolUsuario === 'admin') {
-        this.serviciosService.deleteServicio(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.servicios = this.servicios.filter((servicio: any) => servicio.IdServicio !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Servicio eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      } else {
-        this.serviciosService.deleteServicio(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.servicios = this.servicios.filter((servicio: any) => servicio.IdServicio !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Servicio eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      }
+      this.serviciosService.deleteServicio(id.toString(), this.idUsuario).subscribe(
+        () => {
+          this.servicios = this.servicios.filter((servicio: any) => servicio.IdServicio !== id);
+          this.loadPresupuestos();
+          this.notificationService.showNotification('Servicio eliminado correctamente');
+        },
+        err => console.log(err)
+      );
     }
   }
 
   editServicio(id: number) {
-    if (this.rolUsuario === 'admin') {
-      this.router.navigate(['/servicios/edit', id]);
-    } else {
-      this.router.navigate(['/servicios/edit', id]);
-    }
+    this.router.navigate(['/servicios/edit', id]);
   }
 
   loadPresupuestos() {

@@ -6,6 +6,8 @@ USE ControlGasto;
 
 CREATE TABLE Usuario (
     IdUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    TipoUsuario INT NOT NULL CHECK (TipoUsuario IN (1, 2)),
+    GrupoUsuario INT NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
     ApPaterno VARCHAR(50) NOT NULL,
     ApMaterno VARCHAR(50),
@@ -14,8 +16,7 @@ CREATE TABLE Usuario (
     FechaNacimiento VARCHAR(20) NOT NULL,
     Usuario CHAR(20) NOT NULL UNIQUE,
     Contrasena VARCHAR(30) NOT NULL,
-    Rol ENUM('admin', 'normal') NOT NULL DEFAULT 'normal',
-    CodigoAdmin VARCHAR(50)
+    CONSTRAINT chk_tipo_usuario CHECK (TipoUsuario IN (1, 2))
 );
 
 CREATE TABLE Presupuesto (
@@ -63,32 +64,11 @@ CREATE TABLE Gasto (
 CREATE TABLE Ubicacion (
     IdUbicacion INT PRIMARY KEY AUTO_INCREMENT,
     IdUsuario INT NOT NULL,
-    Latitud DECIMAL(10, 7) NOT NULL,
-    Longitud DECIMAL(10, 7) NOT NULL,
-    Direccion VARCHAR(255),
-    HoraEntrada DATETIME NOT NULL,
-    HoraSalida DATETIME,
+    Latitud DECIMAL(10, 8) NOT NULL,
+    Longitud DECIMAL(11, 8) NOT NULL,
+    FechaRegistro DATETIME NOT NULL,
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
 );
-
-CREATE TABLE tweets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    tweet_id VARCHAR(255) NOT NULL,
-    tweet_text TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE Tarjeta (
-    IdTarjeta INT PRIMARY KEY AUTO_INCREMENT,
-    IdUsuario INT NOT NULL,  
-    NumeroTarjeta VARCHAR(20) NOT NULL,
-    NombreTitular VARCHAR(100) NOT NULL,
-    FechaVencimiento CHAR(7) NOT NULL,  
-    CVV CHAR(3) NOT NULL,
-    Saldo DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario) 
-);
-
 
 -- Trigger que actualiza el presupuesto cuando se crea un usuario
 

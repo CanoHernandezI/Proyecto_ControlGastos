@@ -19,7 +19,7 @@
         </nav>
         <div class="welcome-bar">
           Listado Gasto
-        </div>
+      </div>
       </header>
       <main class="main-content">
         <div *ngIf="notificationMessage" class="notification">
@@ -49,8 +49,7 @@
                 <th>Monto</th>
                 <th>Fecha de transaccion</th>
                 <th>Metodo de Pago</th>
-                <th *ngIf="rolUsuario === 'admin'">Nombre</th>
-                <th *ngIf="rolUsuario === 'admin'">Acciones</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -60,10 +59,9 @@
                 <td>$ {{ gasto.Monto }}</td>
                 <td>{{ gasto.FechaTransaccion | date }}</td>
                 <td>{{ gasto.MetodoPago }}</td>
-                <td *ngIf="rolUsuario === 'admin'">{{ gasto.NombreCompleto }}</td>
-                <td *ngIf="rolUsuario === 'admin'">
-                  <button class="edit-button" (click)="editGasto(gasto.IdGasto)" ><i class="fas fa-edit"></i></button>
-                  <button class="delete-button" (click)="deleteGasto(gasto.IdGasto)" ><i class="fas fa-trash-alt"></i></button>
+                <td>
+                  <button class="edit-button" (click)="editGasto(gasto.IdGasto)"><i class="fas fa-edit"></i></button>
+                  <button class="delete-button" (click)="deleteGasto(gasto.IdGasto)"><i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>
             </tbody>

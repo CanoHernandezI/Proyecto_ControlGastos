@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   notificationMessage: string | null = null;
   passwordFieldType: string = 'password';
 
+  // Definir las propiedades 'username' y 'password'
   username: string = '';
   password: string = '';
 
@@ -48,7 +49,6 @@ export class LoginComponent implements OnInit {
 
         if (usuario) {
           localStorage.setItem('IdUsuario', usuario.IdUsuario);
-          localStorage.setItem('RolUsuario', usuario.Rol);
           this.router.navigate(['/inicio-usuario']);
           this.notificationService.showNotification('Inicio de sesión exitoso');
         } else {

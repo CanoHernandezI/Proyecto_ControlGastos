@@ -22,7 +22,6 @@ export class ResumenComponent implements OnInit {
   resumen: any[] = [];
   resumenOriginal: any[] = []; 
   IdUsuario: string | null = null;
-  rolUsuario: string | null = null; // Añadimos el rol del usuario
 
   constructor(
     private gastoService: GastosService,
@@ -33,7 +32,6 @@ export class ResumenComponent implements OnInit {
   ngOnInit(): void {
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       this.IdUsuario = localStorage.getItem('IdUsuario');
-      this.rolUsuario = localStorage.getItem('RolUsuario'); // Obtener el rol del usuario
       if (this.IdUsuario) {
         this.getAllData();
       } else {
@@ -49,29 +47,19 @@ export class ResumenComponent implements OnInit {
       [{ text: 'Tipo', style: 'tableHeader' }, { text: 'Información', style: 'tableHeader' }, { text: 'Monto', style: 'tableHeader' }, { text: 'Fecha', style: 'tableHeader' }]
     ];
 
-    if (this.rolUsuario === 'admin') {
-      tableBody[0].splice(1, 0, { text: 'Usaurio al que pertenece', style: 'tableHeader' });
-    }
-
     this.resumen.forEach(item => {
-      const rowData = [
+      tableBody.push([
         item.type,
         item.Descripcion || item.OrigenIngreso || item.Producto,
         `$${item.Monto}`,
         new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio).toLocaleDateString()
-      ];
-
-      if (this.rolUsuario === 'admin') {
-        rowData.splice(1, 0, item.NombreCompleto || 'N/A');
-      }
-
-      tableBody.push(rowData);
+      ]);
     });
 
     const pdfDefinition: any = {
       pageMargins: [40, 60, 40, 60],
       pageSize: 'A4',
-      background: function (currentPage, pageSize) {
+      background: function(currentPage, pageSize) {
         return {
           canvas: [
             {
@@ -93,7 +81,7 @@ export class ResumenComponent implements OnInit {
           style: 'tableExample',
           table: {
             body: tableBody,
-            widths: this.rolUsuario === 'admin' ? ['20%', '25%', '25%', '15%', '15%'] : ['25%', '25%', '25%', '25%']
+            widths: ['25%', '25%', '25%', '25%'],
           },
           layout: {
             fillColor: function (rowIndex) {
@@ -127,7 +115,7 @@ export class ResumenComponent implements OnInit {
         },
       }
     };
-
+    
     pdfMake.createPdf(pdfDefinition).download('ResumenMovimientos.pdf');
   }
 
@@ -159,16 +147,10 @@ export class ResumenComponent implements OnInit {
   addToResumen(data: any[], type: string) {
     if (Array.isArray(data)) {
       data.forEach(item => {
-        const resumenItem: any = {
+        this.resumen.push({
           type: type,
           ...item
-        };
-
-        if (this.rolUsuario === 'admin') {
-          resumenItem.NombreCompleto = item.NombreCompleto || 'Usuario'; // Para admin, agregamos el nombre completo
-        }
-
-        this.resumen.push(resumenItem);
+        });
       });
       this.resumenOriginal = [...this.resumen]; // Almacena una copia de los datos originales
     }
@@ -228,4 +210,5 @@ export class ResumenComponent implements OnInit {
       );
     });
   }
+  
 }

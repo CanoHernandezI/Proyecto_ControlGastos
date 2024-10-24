@@ -20,9 +20,7 @@ export class RegistrarseComponent implements OnInit {
     Correo: '',
     FechaNacimiento: '',
     Usuario: '',
-    Contrasena: '',
-    Rol: 'normal', // Por defecto, el rol es normal
-    CodigoAdmin: ''
+    Contrasena: ''
   };
 
   confirmarContrasena: string = ''; 
@@ -79,11 +77,6 @@ export class RegistrarseComponent implements OnInit {
       this.errorMessages['ConfirmarContrasena'] = 'Las contraseñas no coinciden*';
     }
 
-    // Validar el código de administrador solo si el rol es 'normal'
-    if (this.usuario.Rol === 'normal' && !this.usuario.CodigoAdmin) {
-      this.errorMessages['CodigoAdmin'] = 'El código de administrador es requerido para usuarios normales*';
-    }
-
     return Object.keys(this.errorMessages).length === 0;
   }
 
@@ -122,28 +115,29 @@ export class RegistrarseComponent implements OnInit {
   
   saveNewUsuario() {
     if (this.validateForm()) {
-      this.usuarioService.checkUsername(this.usuario.Usuario).subscribe(
-        exists => {
-          if (exists) {
-            this.errorMessages['Usuario'] = 'El nombre de usuario ya existe, por favor elige otro.';
-          } else {
-            this.usuarioService.createUser(this.usuario).subscribe(
-              res => {
-                this.notificationService.showNotification('Cuenta creada exitosamente');
-                this.router.navigate(['/home']);
-              },
-              err => {
+        this.usuarioService.checkUsername(this.usuario.Usuario).subscribe(
+            exists => {
+                if (exists) {
+                    this.errorMessages['Usuario'] = 'El nombre de usuario ya existe, por favor elige otro.';
+                } else {
+                    this.usuarioService.createUser(this.usuario).subscribe(
+                        res => {
+                            this.notificationService.showNotification('Cuenta creada exitosamente');
+                            this.router.navigate(['/home']);
+                        },
+                        err => {
+                            console.log(err);
+                            this.notificationService.showNotification('Hubo un error al crear la cuenta');
+                        }
+                    );
+                }
+            },
+            err => {
                 console.log(err);
-                this.notificationService.showNotification('Hubo un error al crear la cuenta');
-              }
-            );
-          }
-        },
-        err => {
-          console.log(err);
-          this.notificationService.showNotification('Error al verificar el nombre de usuario');
-        }
-      );
+                this.notificationService.showNotification('Error al verificar el nombre de usuario');
+            }
+        );
+    
     }
   }
 }

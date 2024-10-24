@@ -16,8 +16,8 @@ export class GastosService {
     return this.http.get<{ gastos: Gasto[] }>(`${this.API_URI}/${idUser}`).pipe(
       map(response => response.gastos)
     );
-  }
-  
+  }  
+
   getGasto(id: string, idUser: string): Observable<Gasto> {
     return this.http.get<Gasto>(`${this.API_URI}/${idUser}/${id}`).pipe(
       map((gasto: Gasto) => {
