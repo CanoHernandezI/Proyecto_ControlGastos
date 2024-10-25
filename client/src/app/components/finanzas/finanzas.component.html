@@ -30,72 +30,66 @@
                         </a>
                     </li>
                 </div>
-                
                 <br>
-
                 <h1>Consulta una Acción</h1>
-                <div class="white-container">
-                <form (ngSubmit)="onSubmit()" class="form-container">
-                    <label for="ticker">Nombre de la acción a consultar:</label>
-                    <input type="text" id="ticker" [(ngModel)]="ticker" name="ticker" required class="input-field">
-                    <button type="submit" class="submit-btn">Consultar</button>
-                </form>
+                <div>
+                    <div class="white-container">
+                    <form (ngSubmit)="onSubmit()" class="form-container">
+                        <label for="ticker">Nombre de la acción a consultar:</label>
+                        <input type="text" id="ticker" [(ngModel)]="ticker" name="ticker" required class="input-field">
+                        <button type="submit" class="submit-btn">Consultar</button>
+                    </form>
+                    </div>
                 </div>
-
-
                 <br>
-
-                <h1>Información de la Acción: {{ ticker }}</h1>
-                <div class="white-container">
-                    <table class="expenses-table">
-                        <thead>
-                            <tr>
-                                <th>Precio Actual</th>
-                                <th>Precio Alto del Día</th>
-                                <th>Precio Bajo del Día</th>
-                                <th>Precio de Apertura:</th>
-                                <th>Precio de Cierre Anterior</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngIf="!loading && stockData">
-                                <td> 
-                                    <div *ngIf="loading">
-                                        <p>Cargando información de la acción...</p>
-                                    </div>
-                                    {{ stockData.c | number: '1.2-2' }} USD</td>
-                                <td>
-                                    <div *ngIf="loading">
-                                        <p>Cargando información de la acción...</p>
-                                    </div>
-                                    {{ stockData.h | number: '1.2-2' }} USD</td>
-                                <td> 
-                                    <div *ngIf="loading">
-                                        <p>Cargando información de la acción...</p>
-                                    </div>
-                                    {{ stockData.l | number: '1.2-2' }} USD</td>
-                                <td>
-                                    <div *ngIf="loading">
-                                        <p>Cargando información de la acción...</p>
-                                    </div>
-                                     {{ stockData.o | number: '1.2-2' }} USD</td>
-                                <td>
-                                    <div *ngIf="loading">
-                                        <p>Cargando información de la acción...</p>
-                                    </div>
-                                     {{ stockData.pc | number: '1.2-2' }} USD</td>
-                            </tr>
-                        </tbody>
-                        <div *ngIf="errorMessage">
-                            <p>Error: {{ errorMessage }}</p>
-                        </div>
-                    </table>
+                <div *ngIf="searchPerformed">
+                    <h1>Información de la Acción: {{ ticker }}</h1>
+                    <div class="white-container">
+                        <table class="expenses-table">
+                            <thead>
+                                <tr>
+                                    <th>Precio Actual</th>
+                                    <th>Precio Alto del Día</th>
+                                    <th>Precio Bajo del Día</th>
+                                    <th>Precio de Apertura</th>
+                                    <th>Precio de Cierre Anterior</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="!loading && stockData" >
+                                    <td> 
+                                        <div *ngIf="loading">
+                                            <p>Cargando información de la acción...</p>
+                                        </div>
+                                        {{ stockData.c | number: '1.2-2' }} USD</td>
+                                    <td>
+                                        <div *ngIf="loading">
+                                            <p>Cargando información de la acción...</p>
+                                        </div>
+                                        {{ stockData.h | number: '1.2-2' }} USD</td>
+                                    <td> 
+                                        <div *ngIf="loading">
+                                            <p>Cargando información de la acción...</p>
+                                        </div>
+                                        {{ stockData.l | number: '1.2-2' }} USD</td>
+                                    <td>
+                                        <div *ngIf="loading">
+                                            <p>Cargando información de la acción...</p>
+                                        </div>
+                                        {{ stockData.o | number: '1.2-2' }} USD</td>
+                                    <td>
+                                        <div *ngIf="loading">
+                                            <p>Cargando información de la acción...</p>
+                                        </div>
+                                        {{ stockData.pc | number: '1.2-2' }} USD</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
                 <br>
-
                 <div *ngIf="recommendations && recommendations.length > 0">
-                    <h1>Tendencias de Recomendación</h1>
+                    <h1>Tendencias de Recomendación para: {{ ticker }}</h1>
                     <div class="white-container">
                         <table class="expenses-table">
                             <thead>
@@ -104,6 +98,8 @@
                                     <th>Comprar</th>
                                     <th>Vender</th>
                                     <th>Conservar</th>
+                                    <th>Compra fuerte</th>
+                                    <th>Venta fuerte</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,12 +108,13 @@
                                     <td>{{ recommendation.buy }}</td>
                                     <td> {{ recommendation.sell }}</td>
                                     <td>{{ recommendation.hold }}</td>
+                                    <td>{{ recommendation.strongBuy }}</td>
+                                    <td>{{ recommendation.strongSell }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
                 <br>
                 <div *ngIf="companyNews && companyNews.length > 0">
                     <h1>Noticias recientes en el mundo de las finanzas</h1>
@@ -138,21 +135,7 @@
                         </table>
                     </div>
                 </div>
-
                 <br>
-
-                <div *ngIf="currencyRates">
-                    <h1>Valor de la moneda</h1>
-                    <h2>Current Currency Rates for {{baseCurrency}}</h2>
-                    <ul>
-                      <li *ngFor="let currency of currencyRates | keyvalue">
-                        {{currency.key}}: {{currency.value}}
-                      </li>
-                    </ul>
-                </div>
-
-                <br>
-
             </main>          
         </div>
     </body>

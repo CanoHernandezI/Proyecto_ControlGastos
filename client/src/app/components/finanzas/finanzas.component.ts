@@ -14,13 +14,12 @@ export class FinanzasComponent {
   idUsuario: string | null = null;
   presupuestos: any = [];
   stockData: any; // Almacena los datos de la acción para la API de Finnhub
-  ticker: string = 'AAPL'; // Cambia este valor según el ticker que desees consultar para la API de Finnhub
+  ticker: string = ''; // Cambia este valor según el ticker que desees consultar para la API de Finnhub
   loading: boolean = false; // Para manejar el estado de carga para la API de Finnhub
   errorMessage: string = ''; // Mensaje de error para la API de Finnhub
   recommendations: any; //Para las recomendaciones del mercado API Finnhub
-  companyNews: any;  //Para la compania de la que se desea ver la noticias
-  currencyRates: any;  //Para el valor de la moneda
-  baseCurrency: string = 'MXN'; // Puedes cambiar esto a cualquier otra moneda base (como EUR)
+  companyNews: any;  //Para la compania de la que se desea ver la noticias 
+  searchPerformed: boolean = false; //Verifica si ya se busco una accion
 
   constructor(
     private presupuestosService: PresupuestosService,
@@ -56,8 +55,6 @@ export class FinanzasComponent {
 
     // Llama al método de noticias de la compañía con las fechas
     this.fetchRecentCompanyNews(this.ticker);
-
-    this.fetchCurrencyRates(this.baseCurrency); //Para el valor de la moneda.
   }
 
   loadPresupuestos() {
@@ -77,6 +74,7 @@ export class FinanzasComponent {
       this.fetchStockData(this.ticker); // Consultar datos de la acción
       this.fetchRecommendationTrends(this.ticker); // Consultar recomendaciones
       this.fetchRecentCompanyNews(this.ticker); // Consultar noticias recientes
+      this.searchPerformed = true; // Indicar que se ha realizado una búsqueda
     }
   }
 
@@ -124,21 +122,6 @@ fetchRecentCompanyNews(ticker: string) {
     (error) => {
       this.errorMessage = error;
       this.loading = false;
-    }
-  );
-}
-
-
-//Metodo para el valor de la moneda.
-fetchCurrencyRates(baseCurrency: string) {
-  this.stockService.getCurrencyRates(baseCurrency).subscribe(
-    (data: any) => {
-      this.currencyRates = data;
-      console.log('Currency rates:', this.currencyRates); // Agrega esto para revisar los datos
-    },
-    (error) => {
-      console.error('Error fetching currency rates:', error);
-      this.errorMessage = 'Error al obtener las tasas de cambio';
     }
   );
 }

@@ -13,6 +13,7 @@ export class FinancesService {
   private recommendationUrl = 'https://finnhub.io/api/v1/stock/recommendation';   //Para recomendar compra y venta
   private newsUrl = 'https://finnhub.io/api/v1/company-news';  //Para noticias de empresas en especifico
   private apiUrl = 'https://finnhub.io/api/v1/forex/rates'; // Endpoint para valor de moneda
+  private marketHolidayUrl = 'https://finnhub.io/api/v1/calendar/holiday';
 
 
   constructor(private http: HttpClient) {}
@@ -60,7 +61,7 @@ export class FinancesService {
   }
 
   //Metodo que muestra el valor de la moneda
- getCurrencyRates(baseCurrency: string): Observable<any> {
+  getCurrencyRates(baseCurrency: string): Observable<any> {
   const url = `${this.apiUrl}?base=${baseCurrency}&token=${this.apiKey}`;
   return this.http.get(url).pipe(
     catchError((error) => {
@@ -68,5 +69,16 @@ export class FinancesService {
       return throwError('Error al obtener las tasas de cambio.');
     })
   );
-}
+  }
+
+   // Método para obtener los días festivos de mercado
+   getMarketHolidays(): Observable<any> {
+    const url = `${this.marketHolidayUrl}?token=${this.apiKey}`;
+    return this.http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching market holidays', error);
+        return throwError('Error al obtener las fechas de cierre del mercado.');
+      })
+    );
+  }
 }

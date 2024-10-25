@@ -373,9 +373,9 @@ li:hover .tooltip {
 }
 
 .input-field {
-  width: 7%;
+  width: 40%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 26px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
