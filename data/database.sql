@@ -71,6 +71,19 @@ CREATE TABLE Ubicacion (
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
 );
 
+CREATE TABLE Ruta (
+    IdRuta INT PRIMARY KEY AUTO_INCREMENT,
+    IdUsuario INT NOT NULL,
+    FechaInicio DATETIME NOT NULL,
+    FechaFin DATETIME,
+    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
+);
+
+ALTER TABLE Ubicacion
+ADD COLUMN IdRuta INT,
+ADD FOREIGN KEY (IdRuta) REFERENCES Ruta(IdRuta);
+
+
 CREATE TABLE tweets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tweet_id VARCHAR(255) NOT NULL,

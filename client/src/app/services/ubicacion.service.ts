@@ -10,16 +10,28 @@ export class UbicacionService {
 
   constructor(private http: HttpClient) {}
 
-  guardarUbicacion(idUsuario: number, latitud: number, longitud: number, horaEntrada: string): Observable<any> {
-    const body = { idUsuario, latitud, longitud, horaEntrada };
+  // Iniciar una nueva ruta
+  iniciarRuta(idUsuario: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/iniciar-ruta`, { idUsuario });
+  }
+
+  // Guardar ubicación en la ruta
+  guardarUbicacion(idUsuario: number, idRuta: number, latitud: number, longitud: number, horaEntrada: string): Observable<any> {
+    const body = { idUsuario, idRuta, latitud, longitud, horaEntrada };
     return this.http.post(`${this.apiUrl}/guardar`, body);
   }
 
-  actualizarHoraSalida(idUsuario: number, latitud: number, longitud: number, horaSalida: string): Observable<any> {
-    const body = { idUsuario, latitud, longitud, horaSalida };
-    return this.http.put(`${this.apiUrl}/actualizar-salida`, body);
+  // Actualizar hora de salida de una ubicación
+  actualizarHoraSalida(idUbicacion: number, horaSalida: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/actualizar-salida`, { idUbicacion, horaSalida });
   }
 
+  // Finalizar la ruta
+  finalizarRuta(idRuta: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/finalizar-ruta`, { idRuta });
+  }
+
+  // Obtener todas las rutas del usuario
   obtenerRutas(idUsuario: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/rutas/${idUsuario}`);
   }

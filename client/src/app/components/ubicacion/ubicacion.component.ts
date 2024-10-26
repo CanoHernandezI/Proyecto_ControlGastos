@@ -10,6 +10,8 @@ import mapboxgl from 'mapbox-gl';
 export class UbicacionComponent implements OnInit {
   map!: mapboxgl.Map; 
   idUsuario: string | null = null;
+  idRuta!: number;
+  rutasCompletas: any[] = [];
   latitudActual!: number;
   longitudActual!: number;
   horaEntrada!: string;
@@ -35,7 +37,32 @@ export class UbicacionComponent implements OnInit {
     this.map.on('load', () => {
       console.log('Mapa cargado correctamente');
       this.obtenerUbicacion();
+      this.iniciarRuta();
+      this.obtenerRutas();
     });
+  }
+
+  iniciarRuta() {
+    this.ubicacionService.iniciarRuta(parseInt(this.idUsuario!))
+      .subscribe((response) => {
+        this.idRuta = response.idRuta;
+        console.log('Ruta iniciada con ID:', this.idRuta);
+      });
+  }
+
+  finalizarRuta() {
+    this.ubicacionService.finalizarRuta(this.idRuta).subscribe({
+      next: () => console.log('Ruta finalizada'),
+      error: (err) => console.error('Error al finalizar la ruta', err)
+    });
+  }
+
+  obtenerRutas() {
+    this.ubicacionService.obtenerRutas(parseInt(this.idUsuario!))
+      .subscribe((rutas) => {
+        this.rutasCompletas = rutas;
+        console.log('Rutas obtenidas:', this.rutasCompletas);
+      });
   }
 
   obtenerUbicacion() {
@@ -57,21 +84,28 @@ export class UbicacionComponent implements OnInit {
           // Guardar la ubicación en la base de datos
           if (this.idUsuario) {
             this.ubicacionService
-              .guardarUbicacion(parseInt(this.idUsuario), latitud, longitud, this.horaEntrada)
+              .guardarUbicacion(parseInt(this.idUsuario), this.idRuta, latitud, longitud, this.horaEntrada)
               .subscribe({
-                next: () => {
-                  console.log('Ubicación guardada');
-                },
+                next: () => console.log('Ubicación guardada'),
                 error: (err) => console.error('Error guardando la ubicación', err)
               });
           }
         }
       },
-      (error) => {
-        console.error('Error obteniendo la ubicación: ', error);
-      },
+      (error) => console.error('Error obteniendo la ubicación: ', error),
       { enableHighAccuracy: true }
     );
+  }
+
+  dibujarRuta(ruta: any) {
+    if (ruta.ubicaciones.length > 0) {
+      this.map?.flyTo({ center: [ruta.ubicaciones[0].Longitud, ruta.ubicaciones[0].Latitud], zoom: 12 });
+      ruta.ubicaciones.forEach((ubicacion: any) => {
+        new mapboxgl.Marker()
+          .setLngLat([ubicacion.Longitud, ubicacion.Latitud])
+          .addTo(this.map);
+      });
+    }
   }
 
   irALaUbicacionActual() {
@@ -83,9 +117,7 @@ export class UbicacionComponent implements OnInit {
           this.map.flyTo({ center: [longitud, latitud], zoom: 14 });
         }
       },
-      (error) => {
-        console.error('Error obteniendo la ubicación: ', error);
-      }
+      (error) => console.error('Error obteniendo la ubicación: ', error)
     );
   }
 }
