@@ -70,6 +70,38 @@ CREATE TABLE Ubicacion (
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
 );
 
+CREATE TABLE Ruta (
+    IdRuta INT PRIMARY KEY AUTO_INCREMENT,
+    IdUsuario INT NOT NULL,
+    FechaInicio DATETIME NOT NULL,
+    FechaFin DATETIME,
+    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
+);
+
+ALTER TABLE Ubicacion
+ADD COLUMN IdRuta INT,
+ADD FOREIGN KEY (IdRuta) REFERENCES Ruta(IdRuta);
+
+
+CREATE TABLE tweets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tweet_id VARCHAR(255) NOT NULL,
+    tweet_text TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Tarjeta (
+    IdTarjeta INT PRIMARY KEY AUTO_INCREMENT,
+    IdUsuario INT NOT NULL,  
+    NumeroTarjeta VARCHAR(20) NOT NULL,
+    NombreTitular VARCHAR(100) NOT NULL,
+    FechaVencimiento CHAR(7) NOT NULL,  
+    CVV CHAR(3) NOT NULL,
+    Saldo DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario) 
+);
+
+
 -- Trigger que actualiza el presupuesto cuando se crea un usuario
 
 DELIMITER //
