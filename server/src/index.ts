@@ -8,8 +8,12 @@ import ingresoRoutes from './routes/ingresoRoutes';
 import servicioRoutes from './routes/servicioRoutes';
 import presupuestoRoutes from './routes/presupuestoRoutes';
 import ubicacionRoutes from './routes/ubicacionRoutes';
-import twitterRoutes from './routes/twitterRoutes'; 
+import twitterRoutes from './routes/twitterRoutes';
 import tarjetaRoutes from './routes/tarjetaRoutes';
+import telegramRoutes from './routes/telegramRoutes';
+import { initializeTelegramBot } from './controllers/telegramController';
+import videoRoutes from './routes/videoRoutes';
+import dialogflowRoutes from './routes/dialogflowRoutes';
 
 class Server {
     public app: Application;
@@ -38,12 +42,17 @@ class Server {
         this.app.use('/api/ubicacion', ubicacionRoutes);
         this.app.use('/api/twitter', twitterRoutes);
         this.app.use('/api/tarjetas', tarjetaRoutes);
+        this.app.use('/api/telegram', telegramRoutes); 
+        this.app.use('/api', videoRoutes);
+        this.app.use('/api', dialogflowRoutes);
     }
 
     start(): void {
         this.app.listen(this.app.get('port'), () => {
             console.log('Server on port', this.app.get('port'));
         });
+
+        initializeTelegramBot();
     }
 }
 

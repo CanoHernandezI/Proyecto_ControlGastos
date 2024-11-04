@@ -3,7 +3,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { PresupuestosService } from '../../services/presupuestos.service';
 import { Router } from '@angular/router';
 import { GoogleMap } from '@angular/google-maps';
-import { TweetService } from '../../services/tweet.service';  
+import { TweetService } from '../../services/tweet.service';
+import { VideoService } from '../../services/video.service';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-inicio-usuario',
@@ -11,11 +13,20 @@ import { TweetService } from '../../services/tweet.service';
   styleUrls: ['./inicio-usuario.component.css']
 })
 export class InicioUsuarioComponent implements OnInit, AfterViewInit {
+  @ViewChild('videoPopup') videoPopup: ElementRef | undefined;
   presupuestos: any = [];
   idUsuario: string | null = null;
-  tweets: any[] = [];  // Variable para almacenar los tweets
+  tweets: any[] = [];  
   isTweetsPopupVisible: boolean = false;
+  videos: any[] = [];
+  selectedVideoUrl: string | null = null;
+  isYoutubePopupVisible: boolean = false;
+  videoUrl: string;
 
+  private offsetX = 0;
+  private offsetY = 0;
+  private isDragging = false;
+  
   initialPosition = { lat: 19.433668, lng: -99.115728 }; 
   center: google.maps.LatLngLiteral = this.initialPosition;
   zoom = 15;
@@ -26,6 +37,8 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   constructor(
     private presupuestosService: PresupuestosService,
     private tweetService: TweetService,
+    private renderer: Renderer2,
+    private videoService: VideoService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -111,7 +124,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
 
   recenterMap() {
     if (this.map?.googleMap) {
-      this.getCurrentLocation(); // Redirigir al usuario a su ubicación actual
+      this.getCurrentLocation(); 
       this.map.googleMap.setZoom(14);
     }
   }
@@ -139,5 +152,43 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   
   toggleTweetsPopup(): void {
     this.isTweetsPopupVisible = !this.isTweetsPopupVisible;
+  }
+
+  searchVideos(query: string) {
+    this.videoService.searchVideos(query).subscribe(
+      data => {
+        this.videos = data.map((item: any) => ({
+          title: item.snippet.title,
+          videoId: item.id.videoId
+        }));
+      },
+      error => console.error('Error al buscar videos', error)
+    );
+  }
+
+  playVideo(videoId: string) {
+    this.selectedVideoUrl = `https://www.youtube.com/embed/${videoId}`;
+    this.videoService.setSelectedVideoUrl(this.videoUrl);
+  }
+
+  toggleYoutubePopup(): void {
+    this.isYoutubePopupVisible = !this.isYoutubePopupVisible;
+  }
+
+  onMouseDown(event: MouseEvent) {
+    this.isDragging = true;
+    this.offsetX = event.clientX - this.videoPopup!.nativeElement.offsetLeft;
+    this.offsetY = event.clientY - this.videoPopup!.nativeElement.offsetTop;
+  }
+
+  onMouseMove(event: MouseEvent) {
+    if (this.isDragging) {
+      this.renderer.setStyle(this.videoPopup!.nativeElement, 'left', `${event.clientX - this.offsetX}px`);
+      this.renderer.setStyle(this.videoPopup!.nativeElement, 'top', `${event.clientY - this.offsetY}px`);
+    }
+  }
+
+  onMouseUp() {
+    this.isDragging = false;
   }
 }

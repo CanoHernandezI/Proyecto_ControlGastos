@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { GastosService } from '../../services/gastos.service';
 import { IngresosService } from '../../services/ingresos.service';
 import { ServiciosService } from '../../services/servicios.service';
@@ -7,6 +7,8 @@ import { Ingreso } from '../../models/Ingreso';
 import { Servicio } from '../../models/Servicio';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { VideoService } from '../../services/video.service';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -16,17 +18,28 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./resumen.component.css']
 })
 export class ResumenComponent implements OnInit {
+  @ViewChild('videoPopup') videoPopup: ElementRef | undefined;
   gastos: Gasto[] = [];
   ingresos: Ingreso[] = [];
   servicios: Servicio[] = [];
   resumen: any[] = [];
   resumenOriginal: any[] = []; 
   IdUsuario: string | null = null;
-  rolUsuario: string | null = null; // Añadimos el rol del usuario
+  rolUsuario: string | null = null; 
+  videoUrl: string | null = null;
+  videos: any[] = [];
+  selectedVideoUrl: string | null = null;
+  isYoutubePopupVisible: boolean = false;
+
+  private offsetX = 0;
+  private offsetY = 0;
+  private isDragging = false;
 
   constructor(
     private gastoService: GastosService,
     private ingresoService: IngresosService,
+    private renderer: Renderer2,
+    private videoService: VideoService,
     private servicioService: ServiciosService
   ) {}
 
@@ -39,6 +52,9 @@ export class ResumenComponent implements OnInit {
       } else {
         console.error('Usuario no autenticado');
       }
+      this.videoService.selectedVideoUrl$.subscribe(url => {
+        this.videoUrl = url; 
+      });
     } else {
       console.error('localStorage no está disponible en este entorno');
     }
@@ -227,5 +243,39 @@ export class ResumenComponent implements OnInit {
         itemDate.getTime() === selectedDate.getTime() 
       );
     });
+  }
+
+  onMouseDown(event: MouseEvent) {
+    this.isDragging = true;
+    this.offsetX = event.clientX - this.videoPopup!.nativeElement.offsetLeft;
+    this.offsetY = event.clientY - this.videoPopup!.nativeElement.offsetTop;
+  }
+
+  onMouseMove(event: MouseEvent) {
+    if (this.isDragging) {
+      this.renderer.setStyle(this.videoPopup!.nativeElement, 'left', `${event.clientX - this.offsetX}px`);
+      this.renderer.setStyle(this.videoPopup!.nativeElement, 'top', `${event.clientY - this.offsetY}px`);
+    }
+  }
+
+  onMouseUp() {
+    this.isDragging = false;
+  }
+
+  searchVideos(query: string) {
+    this.videoService.searchVideos(query).subscribe(
+      data => {
+        this.videos = data.map((item: any) => ({
+          title: item.snippet.title,
+          videoId: item.id.videoId
+        }));
+      },
+      error => console.error('Error al buscar videos', error)
+    );
+  }
+
+  playVideo(videoId: string) {
+    this.selectedVideoUrl = `https://www.youtube.com/embed/${videoId}`;
+    this.videoService.setSelectedVideoUrl(this.videoUrl);
   }
 }

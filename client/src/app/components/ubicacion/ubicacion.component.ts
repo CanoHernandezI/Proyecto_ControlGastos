@@ -39,6 +39,41 @@ export class UbicacionComponent implements OnInit {
       this.obtenerUbicacion();
       this.iniciarRuta();
       this.obtenerRutas();
+
+      // Añadir capa de lugares de interés (POI)
+      this.map.addSource('places', {
+        type: 'vector',
+        url: 'mapbox://mapbox.mapbox-streets-v8'
+      });
+      
+      this.map.addLayer({
+        id: 'poi-labels',
+        type: 'symbol',
+        source: 'places',
+        'source-layer': 'poi_label',
+        layout: {
+          'text-field': ['get', 'name'],
+          'text-size': 12,
+          'icon-image': ['concat', ['get', 'maki'], '-15'],
+          'icon-size': 1.2
+        },
+        paint: {
+          'text-color': '#555',
+          'text-halo-color': '#fff',
+          'text-halo-width': 1
+        }
+      });
+
+      // Agregar interacción para mostrar nombres de lugares
+      this.map.on('click', 'poi-labels', (e) => {
+        const coordinates = e.lngLat;
+        const name = e.features?.[0].properties["name"] || 'Lugar sin nombre';
+
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(`<h3>${name}</h3>`)
+          .addTo(this.map);
+      });
     });
   }
 
@@ -98,15 +133,33 @@ export class UbicacionComponent implements OnInit {
   }
 
   dibujarRuta(ruta: any) {
-    if (ruta.ubicaciones.length > 0) {
-      this.map?.flyTo({ center: [ruta.ubicaciones[0].Longitud, ruta.ubicaciones[0].Latitud], zoom: 12 });
-      ruta.ubicaciones.forEach((ubicacion: any) => {
-        new mapboxgl.Marker()
-          .setLngLat([ubicacion.Longitud, ubicacion.Latitud])
-          .addTo(this.map);
+    // Limpiar marcadores previos si los hay
+    const markers = document.getElementsByClassName('marker');
+    while (markers[0]) {
+      markers[0].parentNode?.removeChild(markers[0]);
+    }
+  
+    if (ruta.ubicaciones && ruta.ubicaciones.length > 0) {
+      // Centrar el mapa en el primer punto de la ruta
+      this.map?.flyTo({
+        center: [ruta.ubicaciones[0].Longitud, ruta.ubicaciones[0].Latitud],
+        zoom: 12
       });
+  
+      // Dibujar los marcadores de la ruta
+      ruta.ubicaciones.forEach((ubicacion: any) => {
+        // Solo agregar marcador si las coordenadas son válidas
+        if (ubicacion.Longitud && ubicacion.Latitud) {
+          new mapboxgl.Marker({ className: 'marker' })
+            .setLngLat([ubicacion.Longitud, ubicacion.Latitud])
+            .addTo(this.map);
+        }
+      });
+    } else {
+      console.warn('No hay ubicaciones en la ruta seleccionada');
     }
   }
+  
 
   irALaUbicacionActual() {
     navigator.geolocation.getCurrentPosition(

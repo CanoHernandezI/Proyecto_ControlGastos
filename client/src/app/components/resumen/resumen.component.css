@@ -356,3 +356,40 @@ body {
   box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
   transform: translate(0.1em, 0.1em);
 }
+
+.video-popup {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 560px;
+  height: 315px;
+  border: 4px solid #ccc;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  resize: both;
+  overflow: hidden;
+  cursor: move;
+  z-index: 1000;
+  padding-left: 20px; /* Espacio adicional para el pseudo-elemento en el borde izquierdo */
+}
+
+.video-popup::before {
+  content: '⇔'; /* Puedes cambiar este símbolo por otro que prefieras */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px; /* Ancho del borde izquierdo */
+  height: 100%;
+  background-color: #ddd; /* Color del borde */
+  color: #333; /* Color del símbolo */
+  font-size: 18px; /* Tamaño del símbolo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move; /* Cursor de movimiento */
+}
+
+.video-popup iframe {
+  width: calc(100% - 20px); /* Ajustar el ancho del iframe para evitar que se superponga con el borde izquierdo */
+  height: 100%;
+}

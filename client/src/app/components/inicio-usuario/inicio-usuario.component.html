@@ -70,6 +70,12 @@
                 </div>
                 <div class="text">Spotify</div>
             </button>
+            <button class="Btn youtube" (click)="toggleYoutubePopup()">
+                <div class="sign">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="text">YouTube</div>
+            </button>
         </div>
         <div class="floating-container" id="tweets-popup" [style.display]="isTweetsPopupVisible ? 'block' : 'none'">
             <h3>Últimos Tweets</h3>
@@ -78,6 +84,34 @@
                 <small>{{ tweet.created_at | date:'short' }}</small>
                 <hr>
             </div>
+        </div>
+        <div class="floating-container-youtube main" id="youtube-popup"
+            [style.display]="isYoutubePopupVisible ? 'block' : 'none'">
+            <div class="currentplaying">
+                <i class="fab fa-youtube"></i>
+                <p class="heading">Bienvenido a YouTube</p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search__input" placeholder="Buscar videos" #searchInput>
+                <button class="search__button" (click)="searchVideos(searchInput.value)">
+                    <i class="fas fa-search search__icon"></i> <!-- Ícono de lupa dentro del buscador -->
+                </button>
+            </div>
+            <div *ngFor="let video of videos" class="video-item">
+                <img [src]="'https://img.youtube.com/vi/' + video.videoId + '/0.jpg'" alt="{{ video.title }}"
+                    class="video-thumbnail" (click)="playVideo(video.videoId)" />
+                <div (click)="playVideo(video.videoId)" class="video-info">
+                    <p class="name">{{ video.title }}</p>
+                    <p class="artist">{{ video.channelTitle }}</p>
+                </div>
+            </div>
+
+            <div *ngIf="selectedVideoUrl" class="video-popup" #videoPopup (mousedown)="onMouseDown($event)"
+                (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()">
+                <iframe [src]="selectedVideoUrl | safeUrl" frameborder="0" allowfullscreen></iframe>
+            </div>
+
         </div>
         <main class="main-content">
             <section class="gastos">

@@ -24,6 +24,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 registerLocaleData(localeEs, 'es');
 
@@ -45,6 +46,7 @@ registerLocaleData(localeEs, 'es');
         UbicacionComponent,
         PaypalComponent,
         TarjetaComponent,
+        SafeUrlPipe,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: "ubicacion", component: UbicacionComponent},
   { path: "paypal", component: PaypalComponent},
   { path: "tarjeta", component: TarjetaComponent},
-  { path: '**', redirectTo: '/' }
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({
