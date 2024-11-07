@@ -33,6 +33,18 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   videoUrl: string;
   chatId: string = '6661979365';
 
+  suggestions: string[] = [
+    "Cómo hacer un presupuesto",
+    "Consejos para ahorrar dinero",
+    "Inversiones para principiantes",
+    "Errores comunes en el control de gastos",
+    "Cómo mejorar la salud financiera",
+    "Consejos de finanzas personales"
+  ];
+  
+  filteredSuggestions: string[] = [];
+  
+
   private apiKey: string = 'AIzaSyCkCmBeyvOnhnsPpaIv31_h9T4blk0Sy8A';
   private searchEngineId: string = '72c53c886ef4f4338';
 
@@ -262,6 +274,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       (data) => {
         this.results = data.items || [];
         this.searchPerformed = true;
+        this.filteredSuggestions = [];
       },
       (error) => {
         console.error('Error:', error);
@@ -273,5 +286,18 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
 
   toggleGooglePopup(): void {
     this.isGooglePopupVisible = !this.isGooglePopupVisible;
+    if (this.isGooglePopupVisible) {
+      const randomIndex = Math.floor(Math.random() * this.suggestions.length);
+      this.query = this.suggestions[randomIndex];
+    }
+  }
+  
+
+  onInputChange(query: string) {
+    this.filteredSuggestions = this.suggestions.filter(suggestion =>
+      suggestion.toLowerCase().includes(query.toLowerCase())
+    );
   }
 }
+
+

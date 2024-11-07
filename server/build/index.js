@@ -18,7 +18,6 @@ const tarjetaRoutes_1 = __importDefault(require("./routes/tarjetaRoutes"));
 const telegramRoutes_1 = __importDefault(require("./routes/telegramRoutes"));
 const telegramController_1 = require("./controllers/telegramController");
 const videoRoutes_1 = __importDefault(require("./routes/videoRoutes"));
-const dialogflowRoutes_1 = __importDefault(require("./routes/dialogflowRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -44,7 +43,6 @@ class Server {
         this.app.use('/api/tarjetas', tarjetaRoutes_1.default);
         this.app.use('/api/telegram', telegramRoutes_1.default);
         this.app.use('/api', videoRoutes_1.default);
-        this.app.use('/api', dialogflowRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

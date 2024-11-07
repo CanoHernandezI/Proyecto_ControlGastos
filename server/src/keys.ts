@@ -1,5 +1,3 @@
-process.env.GOOGLE_APPLICATION_CREDENTIALS = 'src/controlgastosbot-6b2dbf7deca9.json';
-
 export default {
     database: {
         host: 'localhost',
@@ -15,9 +13,5 @@ export default {
         apiKey: '7766247003:AAF76PDfJwzvTygy3N0rgwsaa8u5J0IaXQs'
     }, youtubeConfig:{
         apiyoutube: 'AIzaSyC-mLHL0KqiRtMRnbdIWGVpQkuw2-htCGM'
-    }, dialogflowConfig:{
-        apiKey: '6b2dbf7deca95c8dc123f1be81aae09fa67a35a7'
-    }, googleConfig: {
-        apikey: 'AIzaSyCkCmBeyvOnhnsPpaIv31_h9T4blk0Sy8A'
     }
 }

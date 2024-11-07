@@ -135,23 +135,24 @@
             [style.display]="isTelegramPopupVisible ? 'block' : 'none'">
             <div class="chat-card">
                 <div class="chat-header">
-                  <div class="h2">Telegram ChatBot</div>
+                    <div class="h2">Telegram ChatBot</div>
                 </div>
                 <div class="chat-body">
-                  <!-- Muestra los mensajes -->
-                  <div *ngFor="let message of chatMessages"
-                       [ngClass]="{'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing'}">
-                    <p>{{ message.text }}</p>
-                  </div>
+                    <!-- Muestra los mensajes -->
+                    <div *ngFor="let message of chatMessages"
+                        [ngClass]="{'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing'}">
+                        <p>{{ message.text }}</p>
+                    </div>
                 </div>
                 <div class="chat-footer">
-                  <input #messageInput placeholder="Ingresa mensaje" type="text">
-                  <button (click)="sendMessage()">Enviar</button>
+                    <input #messageInput placeholder="Ingresa mensaje" type="text">
+                    <button (click)="sendMessage()">Enviar</button>
                 </div>
-              </div>
-              
+            </div>
+
         </div>
-        <div class="floating-container-google" id="google-popup" [style.display]="isGooglePopupVisible ? 'block' : 'none'">
+        <div class="floating-container-google" id="google-popup"
+            [style.display]="isGooglePopupVisible ? 'block' : 'none'">
             <!-- Contenedor para el buscador -->
             <div class="searchbar">
                 <div class="searchbar-wrapper">
@@ -166,20 +167,29 @@
                             </span>
                         </div>
                     </div>
-        
+
                     <div class="searchbar-center">
                         <div class="searchbar-input-spacer"></div>
-        
                         <input type="text" class="searchbar-input" [(ngModel)]="query" (keyup.enter)="performSearch()"
-                            maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Search Google">
+                            (input)="onInputChange(query)" maxlength="2048" name="q" autocapitalize="off"
+                            autocomplete="off" title="Search" role="combobox" placeholder="Search Google" />
+
+
+                        <!-- Sugerencias -->
+                        <div *ngIf="filteredSuggestions.length > 0" class="suggestions-dropdown">
+                            <div *ngFor="let suggestion of filteredSuggestions"
+                                (click)="query = suggestion; performSearch()" class="suggestion-item">
+                                {{ suggestion }}
+                            </div>
+                        </div>
                     </div>
-        
+
                     <div class="searchbar-right">
                         <button class="searchbar-button" (click)="performSearch()">Buscar</button>
                     </div>
                 </div>
             </div>
-        
+
             <!-- Resultados de búsqueda -->
             <div *ngIf="searchPerformed" class="search-results">
                 <div *ngFor="let result of results" class="search-result-item">
@@ -189,7 +199,8 @@
                     <hr class="search-result-divider">
                 </div>
             </div>
-        </div>        
+        </div>
+
         <main class="main-content">
             <section class="gastos">
                 <div class="card">

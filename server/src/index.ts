@@ -13,7 +13,6 @@ import tarjetaRoutes from './routes/tarjetaRoutes';
 import telegramRoutes from './routes/telegramRoutes';
 import { initializeTelegramBot } from './controllers/telegramController';
 import videoRoutes from './routes/videoRoutes';
-import dialogflowRoutes from './routes/dialogflowRoutes';
 
 class Server {
     public app: Application;
@@ -44,7 +43,6 @@ class Server {
         this.app.use('/api/tarjetas', tarjetaRoutes);
         this.app.use('/api/telegram', telegramRoutes); 
         this.app.use('/api', videoRoutes);
-        this.app.use('/api', dialogflowRoutes);
     }
 
     start(): void {
