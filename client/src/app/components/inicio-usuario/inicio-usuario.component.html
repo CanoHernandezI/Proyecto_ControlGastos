@@ -64,6 +64,12 @@
                 </div>
                 <div class="text">PayPal</div>
             </button>
+            <button class="Btn finhub">
+                <div class="sign">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="text">FinHub</div>
+            </button>
             <button class="Btn spotify" routerLink="/callback">
                 <div class="sign">
                     <i class="fab fa-spotify"></i>
@@ -75,6 +81,18 @@
                     <i class="fab fa-youtube"></i>
                 </div>
                 <div class="text">YouTube</div>
+            </button>
+            <button class="Btn google" (click)="toggleGooglePopup()">
+                <div class="sign">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="text">Google</div>
+            </button>
+            <button class="Btn telegram" (click)="toggleTelegramPopup()">
+                <div class="sign">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="text">ChatBot</div>
             </button>
         </div>
         <div class="floating-container" id="tweets-popup" [style.display]="isTweetsPopupVisible ? 'block' : 'none'">
@@ -113,6 +131,65 @@
             </div>
 
         </div>
+        <div class="floating-container-telegram" id="telegram-popup"
+            [style.display]="isTelegramPopupVisible ? 'block' : 'none'">
+            <div class="chat-card">
+                <div class="chat-header">
+                  <div class="h2">Telegram ChatBot</div>
+                </div>
+                <div class="chat-body">
+                  <!-- Muestra los mensajes -->
+                  <div *ngFor="let message of chatMessages"
+                       [ngClass]="{'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing'}">
+                    <p>{{ message.text }}</p>
+                  </div>
+                </div>
+                <div class="chat-footer">
+                  <input #messageInput placeholder="Ingresa mensaje" type="text">
+                  <button (click)="sendMessage()">Enviar</button>
+                </div>
+              </div>
+              
+        </div>
+        <div class="floating-container-google" id="google-popup" [style.display]="isGooglePopupVisible ? 'block' : 'none'">
+            <!-- Contenedor para el buscador -->
+            <div class="searchbar">
+                <div class="searchbar-wrapper">
+                    <div class="searchbar-left">
+                        <div class="search-icon-wrapper">
+                            <span class="search-icon searchbar-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path
+                                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+        
+                    <div class="searchbar-center">
+                        <div class="searchbar-input-spacer"></div>
+        
+                        <input type="text" class="searchbar-input" [(ngModel)]="query" (keyup.enter)="performSearch()"
+                            maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Search Google">
+                    </div>
+        
+                    <div class="searchbar-right">
+                        <button class="searchbar-button" (click)="performSearch()">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Resultados de búsqueda -->
+            <div *ngIf="searchPerformed" class="search-results">
+                <div *ngFor="let result of results" class="search-result-item">
+                    <h3>{{ result.title }}</h3>
+                    <p>{{ result.snippet }}</p>
+                    <a [href]="result.link" target="_blank">{{ result.link }}</a>
+                    <hr class="search-result-divider">
+                </div>
+            </div>
+        </div>        
         <main class="main-content">
             <section class="gastos">
                 <div class="card">
@@ -128,6 +205,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="face front">
                         <img src="/assets/F2.jpg" alt="">

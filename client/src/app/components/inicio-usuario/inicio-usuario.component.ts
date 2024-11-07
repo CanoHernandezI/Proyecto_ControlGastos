@@ -6,6 +6,8 @@ import { GoogleMap } from '@angular/google-maps';
 import { TweetService } from '../../services/tweet.service';
 import { VideoService } from '../../services/video.service';
 import { ElementRef, Renderer2 } from '@angular/core';
+import { TelegramService } from '../../services/telegram.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-inicio-usuario',
@@ -14,20 +16,31 @@ import { ElementRef, Renderer2 } from '@angular/core';
 })
 export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   @ViewChild('videoPopup') videoPopup: ElementRef | undefined;
+  @ViewChild('messageInput') messageInput!: ElementRef;
+  query: string = '';
+  results: any[] = [];
+  searchPerformed: boolean = false;
+  chatMessages: { type: string; text: string }[] = [];
   presupuestos: any = [];
   idUsuario: string | null = null;
-  tweets: any[] = [];  
+  tweets: any[] = [];
   isTweetsPopupVisible: boolean = false;
   videos: any[] = [];
   selectedVideoUrl: string | null = null;
   isYoutubePopupVisible: boolean = false;
+  isTelegramPopupVisible: boolean = false;
+  isGooglePopupVisible: boolean = false;
   videoUrl: string;
+  chatId: string = '6661979365';
+
+  private apiKey: string = 'AIzaSyCkCmBeyvOnhnsPpaIv31_h9T4blk0Sy8A';
+  private searchEngineId: string = '72c53c886ef4f4338';
 
   private offsetX = 0;
   private offsetY = 0;
   private isDragging = false;
-  
-  initialPosition = { lat: 19.433668, lng: -99.115728 }; 
+
+  initialPosition = { lat: 19.433668, lng: -99.115728 };
   center: google.maps.LatLngLiteral = this.initialPosition;
   zoom = 15;
 
@@ -37,11 +50,13 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   constructor(
     private presupuestosService: PresupuestosService,
     private tweetService: TweetService,
+    private http: HttpClient,
+    private telegramService: TelegramService,
     private renderer: Renderer2,
     private videoService: VideoService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -124,7 +139,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
 
   recenterMap() {
     if (this.map?.googleMap) {
-      this.getCurrentLocation(); 
+      this.getCurrentLocation();
       this.map.googleMap.setZoom(14);
     }
   }
@@ -149,7 +164,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  
+
   toggleTweetsPopup(): void {
     this.isTweetsPopupVisible = !this.isTweetsPopupVisible;
   }
@@ -190,5 +205,73 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
 
   onMouseUp() {
     this.isDragging = false;
+  }
+
+  toggleTelegramPopup(): void {
+    this.isTelegramPopupVisible = !this.isTelegramPopupVisible;
+  }
+
+  sendMessage(): void {
+    const message = this.messageInput.nativeElement.value;
+    if (message.trim()) {
+        this.chatMessages.push({ type: 'outgoing', text: message });
+
+        this.telegramService.sendMessage(this.chatId, message).subscribe(
+            (response) => {
+                if (response && response.message) {
+                    this.chatMessages.push({ type: 'incoming', text: response.message });
+
+                    if (response.redirect) {
+                        if (/creación de gastos/i.test(response.message)) {
+                            this.router.navigate(['gastos/add']);
+                        } else if (/listado de gastos/i.test(response.message)) {
+                            this.router.navigate(['gastos/list']);
+                        } else if (/creación de ingresos/i.test(response.message)) {
+                            this.router.navigate(['ingresos/add']);
+                        } else if (/listado de ingresos/i.test(response.message)) {
+                            this.router.navigate(['ingresos/list']);
+                        } else if (/creación de servicios/i.test(response.message)) {
+                            this.router.navigate(['servicios/add']);
+                        } else if (/listado de servicios/i.test(response.message)) {
+                            this.router.navigate(['servicios/list']);
+                        } else if (/resumen/i.test(response.message)) {
+                            this.router.navigate(['resumen']);
+                        }
+                    }
+                } else {
+                    console.error('Respuesta del servidor no contiene un mensaje');
+                }
+            },
+            (error) => {
+                console.error('Error enviando mensaje al bot de Telegram', error);
+            }
+        );
+
+        this.messageInput.nativeElement.value = '';
+    }
+}
+
+
+
+  performSearch() {
+    if (this.query.trim() === '') return;
+
+    const url = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(this.query)}&key=${this.apiKey}&cx=${this.searchEngineId}`;
+
+    this.http.get<any>(url).subscribe(
+      (data) => {
+        this.results = data.items || [];
+        this.searchPerformed = true;
+      },
+      (error) => {
+        console.error('Error:', error);
+        this.results = [];
+        this.searchPerformed = true;
+      }
+    );
+  }
+
+  toggleGooglePopup(): void {
+    this.isGooglePopupVisible = !this.isGooglePopupVisible;
   }
 }

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { sendMessageToTelegram } from '../controllers/telegramController';
+import { simulateUserMessage } from '../controllers/telegramController';
 
 const router = Router();
 
-router.post('/send', sendMessageToTelegram);
+router.post('/simulate', simulateUserMessage);
 
 export default router;
