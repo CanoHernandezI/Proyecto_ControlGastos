@@ -67,14 +67,7 @@ export class SpotifyComponent implements OnInit {
 
       this.spotifyService.searchFinancePodcasts(this.accessToken).subscribe({
         next: (response) => {
-          console.log('Respuesta de búsqueda de podcasts:',JSON.stringify(response)); // Imprime la respuesta completa para revisar
-          if (response && response.shows && response.shows.items) {
-            console.log('Podcasts encontrados:', response.shows.items); // Verificar los podcasts encontrados
-            this.podcasts = response.shows.items;
-            console.log('Podcasts a mostrar:', this.podcasts); // Verificar si se están cargando los podcasts correctamente
-          } else {
-            this.error = 'No se encontraron podcasts relacionados';
-          } 
+          this.podcasts = response;
           this.isLoadingPodcasts = false;
         },
         error: (error) => {
@@ -91,6 +84,7 @@ export class SpotifyComponent implements OnInit {
             this.error = 'Error al obtener podcasts';
           }*/
           this.isLoadingPodcasts = false;
+          this.error = 'Error al obtener podcasts';
         }
       });
     } else {
@@ -98,7 +92,7 @@ export class SpotifyComponent implements OnInit {
     }
   }
 
-
+/*
 // Método para refrescar el token si ha expirado
 private refreshToken(access_token: string): void {
   this.spotifyService.refreshToken(access_token).subscribe({
@@ -115,7 +109,7 @@ private refreshToken(access_token: string): void {
     }
   });
 }
-
+*/
   
   loadPodcastEpisodes(podcastId: string): void {
     if (this.accessToken) {
@@ -134,7 +128,8 @@ private refreshToken(access_token: string): void {
   }
 
   trackByPodcastId(index: number, podcast: any): string {
-    return podcast.id; // Usa el ID único de cada podcast para que Angular pueda hacer un seguimiento más eficiente
-  }
+  return podcast.id; // Usa el ID único de cada podcast para ayudar a Angular a hacer un seguimiento más eficiente
+}
+
   
 }

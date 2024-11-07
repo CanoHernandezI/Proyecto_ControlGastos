@@ -13,6 +13,7 @@ export class SpotifyService {
   public redirectUri = 'http://localhost:4200/spotify';
   private authTokenUrl = 'https://accounts.spotify.com/api/token';
   private apiUrl = 'https://api.spotify.com/v1';
+  private cachedPodcasts: any[] | null = null; // Para guardar los podcasts en memoria
 
   private accessToken: string | null = null;
 
@@ -56,7 +57,7 @@ export class SpotifyService {
     );
   }
   
-  // Método para refrescar el token usando el refreshToken
+  /*// Método para refrescar el token usando el refreshToken
   refreshToken(refreshToken: string): Observable<any> {
     const body = new URLSearchParams();
     body.set('grant_type', 'refresh_token');
@@ -68,7 +69,7 @@ export class SpotifyService {
 
     return this.http.post(this.authTokenUrl, body.toString(), { headers });
   }
-  
+  */
 
   authorizeSpotify(): string {
     const scopes = [
@@ -88,11 +89,19 @@ export class SpotifyService {
     return 'https://accounts.spotify.com/authorize?' + params.toString();
   }
 
+  // Método de búsqueda de podcasts modificado
   searchFinancePodcasts(accessToken: string): Observable<any> {
-    //const uri = 'https://api.spotify.com/v1/search';
+    if (this.cachedPodcasts) {
+      // Si los podcasts ya están en memoria, los emitimos como un observable
+      return new Observable(observer => {
+        observer.next(this.cachedPodcasts);
+        observer.complete();
+      });
+    }
+
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
     });
 
     const params = new HttpParams()
@@ -101,15 +110,12 @@ export class SpotifyService {
       .set('market', 'ES')
       .set('limit', '20');
 
-      //const url = `${this.apiUrl}/search`;
-      // Log de la URL, parámetros y headers
-
-      //console.log('URL de búsqueda:', uri);
-      console.log('Paramas:', params.toString());
-      console.log('Headers:', headers);
-      console.log('Token::::',accessToken);
-
     return this.http.get(`${this.apiUrl}/search`, { headers, params }).pipe(
+      map((response: any) => {
+        // Guardamos los podcasts en `cachedPodcasts` después de cargarlos
+        this.cachedPodcasts = response.shows.items;
+        return this.cachedPodcasts;
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error('Error en la solicitud de búsqueda:', error);
         return throwError(error);
@@ -117,6 +123,10 @@ export class SpotifyService {
     );
   }
 
+  // Método para limpiar la caché al cerrar sesión
+  clearCachedPodcasts(): void {
+    this.cachedPodcasts = null;
+  }
 
 
   getPodcastEpisodes(accessToken: string, showId: string): Observable<any> {
