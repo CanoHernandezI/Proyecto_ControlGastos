@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpotifyService } from '../../services/spotify.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/authspoti.service';
 
 @Component({
   selector: 'app-spotify',

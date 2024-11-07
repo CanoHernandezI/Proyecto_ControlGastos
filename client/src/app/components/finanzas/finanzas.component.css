@@ -52,8 +52,11 @@ body {
 .logo span {
   font-size: 20px;
   font-weight: bold;
-  margin-left: -80px;
+  margin-left: 80px;
   margin-top: 15px;
+  white-space: nowrap;  /* Impide que el texto se rompa */
+  overflow: hidden;  /* Oculta cualquier contenido desbordado */
+  text-overflow: ellipsis; /* Añade "..." si el texto se desborda */
 }
 
 .nav-links {
@@ -141,9 +144,9 @@ body {
 }
 
 .main-content h1 {
-  margin-top: 0;
+  margin-top: 10;
   margin-bottom: 20px; 
-  text-align: left;
+  text-align: center;
   color: #fff;
   margin-right: 20px; 
 }
