@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PresupuestosService } from '../../services/presupuestos.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { FinancesService } from '../../services/finances.service';
+import { SpotifyService } from '../../services/spotify.service';
 
 @Component({
   selector: 'app-finanzas',
   templateUrl: './finanzas.component.html',
   styleUrl: './finanzas.component.css'
 })  
-export class FinanzasComponent {
+export class FinanzasComponent implements OnInit {
   notificationMessage: string | null = null;
   idUsuario: string | null = null;
   presupuestos: any = [];
@@ -20,15 +21,18 @@ export class FinanzasComponent {
   recommendations: any; //Para las recomendaciones del mercado API Finnhub
   companyNews: any;  //Para la compania de la que se desea ver la noticias 
   searchPerformed: boolean = false; //Verifica si ya se busco una accion
+  receiveMessage: any;
 
   constructor(
     private presupuestosService: PresupuestosService,
     private router: Router,
     private notificationService: NotificationService,
     private stockService: FinancesService, //Servicio de finhub (finanzas).
+    private route: ActivatedRoute
   ){}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    window.addEventListener('message', this.receiveMessage.bind(this), false);
     this.idUsuario = localStorage.getItem('IdUsuario');
     if (this.idUsuario) {
       this.loadPresupuestos();
@@ -77,7 +81,6 @@ export class FinanzasComponent {
       this.searchPerformed = true; // Indicar que se ha realizado una búsqueda
     }
   }
-
 
  // Método para obtener datos de acciones usando Finnhub
  fetchStockData(ticker: string) {

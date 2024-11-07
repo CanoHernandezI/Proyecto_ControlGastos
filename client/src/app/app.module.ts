@@ -23,6 +23,7 @@ import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-te
 import { GoogleMapsModule } from '@angular/google-maps';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SpotifyComponent } from './components/spotify/spotify.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -41,7 +42,8 @@ registerLocaleData(localeEs, 'es');
         UsuarioComponent,
         ResumenComponent,
         SoporteTecnicoComponent,
-        FinanzasComponent
+        FinanzasComponent,
+        SpotifyComponent
     ],
     bootstrap: [AppComponent], 
     

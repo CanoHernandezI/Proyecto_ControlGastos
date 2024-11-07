@@ -1,0 +1,27 @@
+<div class="container mx-4 my-4">
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!accessToken" class="text-center">
+    <h2 class="text-xl mb-4">Podcasts de Finanzas en Spotify</h2>
+    <button 
+      (click)="authorizeSpotify()" 
+      class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+      Conectar con Spotify
+    </button>
+  </div>
+
+  <div *ngIf="isLoadingPodcasts" class="text-center py-4">
+    <p>Cargando podcasts...</p>
+  </div>
+
+  <div *ngIf="podcasts && podcasts.length > 0">
+    <div *ngFor="let podcast of podcasts; trackBy: trackByPodcastId">
+      <h3>{{ podcast.name }}</h3>
+      <p>{{ podcast.description }}</p>
+      <a [href]="podcast.external_urls.spotify" target="_blank">Escuchar en Spotify</a>
+      <img *ngIf="podcast.images && podcast.images.length > 0" [src]="podcast.images[0]?.url" alt="{{ podcast.name }}" style="width: 100px; height: 100px;">
+    </div>
+  </div>
+</div>

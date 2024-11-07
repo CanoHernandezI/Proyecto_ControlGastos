@@ -15,6 +15,7 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ResumenComponent } from './components/resumen/resumen.component';
 import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-tecnico.component';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
+import { SpotifyComponent } from './components/spotify/spotify.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -34,6 +35,9 @@ const routes: Routes = [
   { path: "resumen", component: ResumenComponent},
   { path: "soporte-tecnico", component: SoporteTecnicoComponent},
   { path: "finanzas", component: FinanzasComponent},
+  { path: 'callback', component: SpotifyComponent },
+  { path: 'spotify', component: SpotifyComponent },
+  { path: '', redirectTo: '/spotify', pathMatch: 'full' },
   { path: '**', redirectTo: '/' }
 ];
 
