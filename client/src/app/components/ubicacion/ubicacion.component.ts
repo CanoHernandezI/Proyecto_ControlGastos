@@ -40,11 +40,14 @@ export class UbicacionComponent implements OnInit {
       this.iniciarRuta();
       this.obtenerRutas();
 
-      // Añadir capa de lugares de interés (POI)
       this.map.addSource('places', {
         type: 'vector',
         url: 'mapbox://mapbox.mapbox-streets-v8'
       });
+
+      setInterval(() => {
+        this.obtenerUbicacion();
+      }, 500);
       
       this.map.addLayer({
         id: 'poi-labels',
@@ -64,7 +67,6 @@ export class UbicacionComponent implements OnInit {
         }
       });
 
-      // Agregar interacción para mostrar nombres de lugares
       this.map.on('click', 'poi-labels', (e) => {
         const coordinates = e.lngLat;
         const name = e.features?.[0].properties["name"] || 'Lugar sin nombre';
@@ -116,7 +118,6 @@ export class UbicacionComponent implements OnInit {
             .setLngLat([longitud, latitud])
             .addTo(this.map);
 
-          // Guardar la ubicación en la base de datos
           if (this.idUsuario) {
             this.ubicacionService
               .guardarUbicacion(parseInt(this.idUsuario), this.idRuta, latitud, longitud, this.horaEntrada)
@@ -133,22 +134,18 @@ export class UbicacionComponent implements OnInit {
   }
 
   dibujarRuta(ruta: any) {
-    // Limpiar marcadores previos si los hay
     const markers = document.getElementsByClassName('marker');
     while (markers[0]) {
       markers[0].parentNode?.removeChild(markers[0]);
     }
   
     if (ruta.ubicaciones && ruta.ubicaciones.length > 0) {
-      // Centrar el mapa en el primer punto de la ruta
       this.map?.flyTo({
         center: [ruta.ubicaciones[0].Longitud, ruta.ubicaciones[0].Latitud],
         zoom: 12
       });
   
-      // Dibujar los marcadores de la ruta
-      ruta.ubicaciones.forEach((ubicacion: any) => {
-        // Solo agregar marcador si las coordenadas son válidas
+     ruta.ubicaciones.forEach((ubicacion: any) => {
         if (ubicacion.Longitud && ubicacion.Latitud) {
           new mapboxgl.Marker({ className: 'marker' })
             .setLngLat([ubicacion.Longitud, ubicacion.Latitud])

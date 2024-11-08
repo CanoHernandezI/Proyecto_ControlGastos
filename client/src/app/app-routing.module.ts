@@ -17,7 +17,8 @@ import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-te
 import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
-
+import { FinanzasComponent } from './components/finanzas/finanzas.component';
+import { SpotifyComponent } from './components/spotify/spotify.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -39,6 +40,8 @@ const routes: Routes = [
   { path: "ubicacion", component: UbicacionComponent},
   { path: "paypal", component: PaypalComponent},
   { path: "tarjeta", component: TarjetaComponent},
+  { path: "finanzas", component: FinanzasComponent},
+  { path: "spotify", component: SpotifyComponent},
   { path: '**', redirectTo: '/' },
 ];
 
