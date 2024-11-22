@@ -16,6 +16,7 @@ CREATE TABLE Usuario (
     FechaNacimiento VARCHAR(20) NOT NULL,
     Usuario CHAR(20) NOT NULL UNIQUE,
     Contrasena VARCHAR(30) NOT NULL,
+    SpotiToken VARCHAR(256),
     CONSTRAINT chk_tipo_usuario CHECK (TipoUsuario IN (1, 2))
 );
 

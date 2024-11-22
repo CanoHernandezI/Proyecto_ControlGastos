@@ -355,142 +355,151 @@ li:hover .tooltip {
 }
 
 .Btn:active {
-  transform: translate(2px, 2px);
-}
-
-/* Estilos para el formulario */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-}
-
-.form-container label {
-  font-size: 18px;
-  color: white;
-  font-weight: 600;
-}
-
-.input-field {
-  width: 40%;
-  padding: 10px;
-  font-size: 26px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s;
-}
-
-.input-field:focus {
-  border-color: #4a4657;
-  outline: none;
-}
-
-.submit-btn {
-  background-color: #1db954;  /* Color verde de Spotify */
-  color: white;
-  padding: 12px 30px;
-  border-radius: 50px;  /* Borde redondeado */
-  border: none;
+  transform: translate(2px, 2px); 
   cursor: pointer;
-  font-size: 1.2em;
-  transition: all 0.3s ease;  /* Transición suave */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);  /* Sombra suave */
-  margin-top: 20px;  /* Espaciado superior */
-  display: inline-block;  /* Asegura que el botón ocupe solo el espacio necesario */
-  text-align: center;  /* Centra el texto dentro del botón */
+  max-width: 700px; /* Limitar el ancho máximo */
 }
 
-.submit-btn:hover {
-  background-color: #1aaf47;  /* Color verde más oscuro al hacer hover */
-  transform: scale(1.05);  /* Aumenta ligeramente el tamaño al pasar el mouse */
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);  /* Sombra más intensa al hacer hover */
+/* Efecto de hover para la tarjeta */
+.podcast-background:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
 }
 
-.podcast-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-}
-
-.podcast-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.podcast-background {
-  background-color: #ffffff; /* Fondo blanco */
-  padding: 20px;
-  border: 2px solid #4a4657; /* Borde oscuro */
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-}
-
+/* Imagen del podcast */
 .podcast-image {
-  width: 80px; /* Tamaño de la imagen */
-  height: auto;
+  width: 100px; /* Aumentar tamaño de la imagen */
+  height: 100px; /* Mantener proporción */
+  object-fit: cover; /* Asegura que la imagen ocupe todo el espacio sin deformarse */
   border-radius: 10px; /* Bordes redondeados */
 }
 
+/* Contenido del podcast */
 .podcast-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
+  max-width: 300px; /* Limitar el tamaño del contenido */
 }
 
 .podcast-title {
-  font-size: 1.4em;
-  color: #333;
+  font-size: 1.6em; /* Aumentar tamaño del título */
+  color: #ffffff;
+  font-weight: bold;
+  line-height: 1.2em;
 }
 
 .podcast-description {
-  font-size: 1em;
-  color: #666;
+  font-size: 1.2em; /* Aumentar tamaño de la descripción */
+  color: #b0b0b0;
+  overflow: visible; /* Permitir que el texto se muestre completo */
+  text-overflow: ellipsis;
+  line-height: 1.4em;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Aumentar el número de líneas visibles */
+  -webkit-box-orient: vertical;
 }
 
+/* Botón para abrir en Spotify */
 .spotify-button {
   background-color: #1db954;
   color: white;
   text-decoration: none;
-  padding: 8px 15px;
+  padding: 10px 20px; /* Aumentar padding */
   border-radius: 5px;
   display: inline-block;
   font-weight: bold;
+  font-size: 1em; /* Aumentar tamaño de fuente */
 }
 
 .spotify-button:hover {
   background-color: #1aaf47;
 }
 
-.submit-btn:active {
-  transform: scale(1);  /* Vuelve al tamaño normal cuando el botón se presiona */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);  /* Vuelve la sombra al estado original */
+.episode-list {
+  margin-top: 20px;
+  width: 100%;
 }
-/* Si el contenedor es un flex container */
-.spotify-auth-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;  /* Centra el contenido horizontalmente */
-  justify-content: center;  /* Centra el contenido verticalmente */
-  text-align: center;  /* Centra el texto */
-  gap: 20px;
-  width: fit-content;  /* Ajusta el ancho al contenido */
-  margin: 0 auto;  /* Centra el contenedor */
-  padding: 20px;
+
+.episode-card {
   background-color: #fff;
-  border: 2px solid #4a4657;
+  padding: 20px; /* Aumentar padding */
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.episode-card p {
+  font-size: 1.2rem; /* Aumentar tamaño de texto */
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.episode-card iframe {
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 400%;
+  height: 3000px; /* Aumentar tamaño del reproductor */
+  border: none;
+}
+
+/* Contenedor de grilla */
+.podcast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Aumentar el tamaño mínimo de las tarjetas */
+  gap: 30px; /* Espacio entre tarjetas */
+  padding: 20px;
+}
+
+
+
+
+
+
+/* Tarjeta de cada podcast */
+.podcast-card {
+  background-color: #646464;
+  color: #fff; /* Texto blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s; /* Efecto de hover */
+  max-width: 800px; /* Limitar el ancho máximo */
+}
+
+.podcast-card:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+
+  
+}
+
+/* Imagen del podcast */
+.podcast-image {
+  width: 100%;
+  height: 100%; /* Aumentar la altura de la imagen */
+  object-fit: cover; /* Asegura que la imagen ocupe todo el espacio sin deformarse */
+  border-bottom: 2px solid #333; /* Línea separadora para un efecto visual */
+}
+
+/* Contenido del podcast (título y descripción) */
+.podcast-content {
+  padding: 20px; /* Aumentar padding */
+}
+
+.podcast-title {
+  font-size: 1.2em; /* Aumentar tamaño del título */
+  font-weight: bold;
+  margin: 0;
+}
+
+.podcast-description {
+  font-size: 1em; /* Aumentar tamaño de la descripción */
+  color: #ccc;
+  margin-top: 10px;
+  height: auto; /* Permitir mayor espacio para el texto */
+  overflow: visible; /* Permitir que el texto se muestre completo */
+  text-overflow: ellipsis; /* Mostrar "..." si el texto es largo */
 }
