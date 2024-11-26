@@ -5,8 +5,17 @@ import gastoRoutes from './routes/gastoRoutes';
 import ingresoRoutes from './routes/ingresoRoutes';
 import servicioRoutes from './routes/servicioRoutes';
 import presupuestoRoutes from './routes/presupuestoRoutes';
+<<<<<<< HEAD
 import morgan from 'morgan';
 import cors from 'cors';
+=======
+import ubicacionRoutes from './routes/ubicacionRoutes';
+import twitterRoutes from './routes/twitterRoutes';
+import tarjetaRoutes from './routes/tarjetaRoutes';
+import telegramRoutes from './routes/telegramRoutes';
+import { initializeTelegramBot } from './controllers/telegramController';
+import videoRoutes from './routes/videoRoutes';
+>>>>>>> a015bae7fa6b2bb31b2603ae368cb951e37f9d60
 
 class Server {
     public app: Application;
@@ -32,12 +41,22 @@ class Server {
         this.app.use('/api/ingreso', ingresoRoutes);
         this.app.use('/api/servicio', servicioRoutes);
         this.app.use('/api/presupuesto', presupuestoRoutes);
+<<<<<<< HEAD
+=======
+        this.app.use('/api/ubicacion', ubicacionRoutes);
+        this.app.use('/api/twitter', twitterRoutes);
+        this.app.use('/api/tarjetas', tarjetaRoutes);
+        this.app.use('/api/telegram', telegramRoutes); 
+        this.app.use('/api', videoRoutes);
+>>>>>>> a015bae7fa6b2bb31b2603ae368cb951e37f9d60
     }
 
     start(): void {
         this.app.listen(this.app.get('port'), () => {
             console.log('Server on port', this.app.get('port'));
         });
+
+        initializeTelegramBot();
     }
 }
 

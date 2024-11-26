@@ -5,7 +5,6 @@ import axios from 'axios';
 const mapboxToken = 'pk.eyJ1IjoiaXNhYWNjYW5vaCIsImEiOiJjbTF1MW40djEwOG91MmlvbDVvM2pudDNkIn0.HwWvhLZXDgZCW4Sa3WDYmA'; 
 
 class UbicacionController {
-  // Iniciar una nueva ruta
   public async iniciarRuta(req: Request, res: Response): Promise<void> {
     const { idUsuario } = req.body;
 
@@ -19,7 +18,6 @@ class UbicacionController {
     }
   }
 
-  // Guardar ubicación con el IdRuta
   public async guardarUbicacion(req: Request, res: Response): Promise<void> {
     const { idUsuario, idRuta, latitud, longitud, horaEntrada } = req.body;
 
@@ -40,7 +38,6 @@ class UbicacionController {
     }
   }
 
-  // Actualizar hora de salida en la ubicación
   public async actualizarHoraSalida(req: Request, res: Response): Promise<void> {
     const { idUbicacion, horaSalida } = req.body;
 
@@ -53,7 +50,6 @@ class UbicacionController {
     }
   }
 
-  // Finalizar la ruta
   public async finalizarRuta(req: Request, res: Response): Promise<void> {
     const { idRuta } = req.body;
 
@@ -66,7 +62,6 @@ class UbicacionController {
     }
   }
 
-  // Obtener todas las rutas de un usuario con tiempos de permanencia
   public async obtenerRutas(req: Request, res: Response): Promise<void> {
     const { idUsuario } = req.params;
 

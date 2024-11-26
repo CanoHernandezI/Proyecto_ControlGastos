@@ -3,7 +3,10 @@ import { PresupuestosService } from '../../services/presupuestos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { FinancesService } from '../../services/finances.service';
+<<<<<<< HEAD
 import { SpotifyService } from '../../services/spotify.service';
+=======
+>>>>>>> a015bae7fa6b2bb31b2603ae368cb951e37f9d60
 
 @Component({
   selector: 'app-finanzas',
@@ -128,9 +131,13 @@ fetchRecentCompanyNews(ticker: string) {
     }
   );
 }
+<<<<<<< HEAD
 }
 
 
 
 
 
+=======
+}
+>>>>>>> a015bae7fa6b2bb31b2603ae368cb951e37f9d60

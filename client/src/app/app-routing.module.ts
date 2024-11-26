@@ -14,6 +14,9 @@ import { ServicioListComponent } from './components/servicio-list/servicio-list.
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ResumenComponent } from './components/resumen/resumen.component';
 import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-tecnico.component';
+import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
+import { PaypalComponent } from './components/paypal/paypal.component';
+import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
 
@@ -34,11 +37,12 @@ const routes: Routes = [
   { path: 'usuario', component: UsuarioComponent},
   { path: "resumen", component: ResumenComponent},
   { path: "soporte-tecnico", component: SoporteTecnicoComponent},
+  { path: "ubicacion", component: UbicacionComponent},
+  { path: "paypal", component: PaypalComponent},
+  { path: "tarjeta", component: TarjetaComponent},
   { path: "finanzas", component: FinanzasComponent},
-  { path: 'callback', component: SpotifyComponent },
-  { path: 'spotify', component: SpotifyComponent },
-  { path: '', redirectTo: '/spotify', pathMatch: 'full' },
-  { path: '**', redirectTo: '/' }
+  { path: "spotify", component: SpotifyComponent},
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

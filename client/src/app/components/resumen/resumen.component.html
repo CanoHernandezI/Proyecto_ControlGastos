@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
   <div class="container">
     <header class="header">
@@ -19,14 +21,18 @@
       </nav>
       <div class="welcome-bar">
         Resumen
-    </div>
+      </div>
     </header>
+    <div *ngIf="selectedVideoUrl" class="video-popup" #videoPopup (mousedown)="onMouseDown($event)"
+      (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()">
+      <iframe [src]="selectedVideoUrl | safeUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
     <main class="main-content">
       <h1>Resumen Gastos</h1>
       <div class="dropdown">
         <button class="button_descargar" (click)="createPdf()">Descargar PDF</button>
-      </div> 
-      <div class="white-container">      
+      </div>
+      <div class="white-container">
         <table class="expenses-table">
           <thead>
             <tr>
@@ -49,4 +55,5 @@
     </main>
   </div>
 </body>
+
 </html>
