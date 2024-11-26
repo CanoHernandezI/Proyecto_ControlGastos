@@ -12,6 +12,6 @@ export class NotificationService {
     this.notificationSubject.next(message);
     setTimeout(() => {
       this.notificationSubject.next(null);
-    }, 1000); // La notificación desaparecerá después de 3 segundos
+    }, 1000); 
   }
 }

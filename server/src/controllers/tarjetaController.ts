@@ -25,7 +25,6 @@ class TarjetaController {
     public async simularTransferencia(req: Request, res: Response): Promise<void> {
         const { IdUsuario, IdTarjeta, monto } = req.body;
 
-        // Obtener la tarjeta del usuario
         const tarjeta = await pool.query('SELECT * FROM Tarjeta WHERE IdTarjeta = ? AND IdUsuario = ?', [IdTarjeta, IdUsuario]);
         if (tarjeta.length === 0) {
             res.status(404).json({ message: 'Tarjeta no encontrada o no pertenece al usuario' });
@@ -52,7 +51,6 @@ class TarjetaController {
         });
 
         try {
-            // Crear la orden de PayPal
             const order = await paypalClient.execute(request);
             console.log('Order ID: ', order.result.id);
 

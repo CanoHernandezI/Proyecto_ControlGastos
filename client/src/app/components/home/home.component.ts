@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../../services/notification.service';  // Importa NotificationService
+import { NotificationService } from '../../services/notification.service'; // Importa NotificationService
 
 @Component({
   selector: 'app-home',
@@ -8,13 +8,17 @@ import { NotificationService } from '../../services/notification.service';  // I
 })
 export class HomeComponent implements OnInit {
   notificationMessage: string | null = null;
+  isMenuVisible: boolean = false; //Nuevo
 
   constructor(private notificationService: NotificationService) {}
 
   ngOnInit() {
-    // Subscribirse a las notificaciones
     this.notificationService.notification$.subscribe(message => {
       this.notificationMessage = message;
     });
+  }
+
+  toggleMenu(): void { //Nuevo
+    this.isMenuVisible = !this.isMenuVisible;
   }
 }

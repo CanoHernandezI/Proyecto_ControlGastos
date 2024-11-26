@@ -202,15 +202,11 @@ section h2 {
   text-align: center;
 }
 
-/* Contenedor para las tarjetas con scroll horizontal */
 .gastos {
   display: flex;
-  overflow-x: auto;
-  /* Activa la barra deslizadora horizontal */
-  gap: 20px;
-  padding: 20px;
-  scroll-behavior: smooth;
-  /* Suaviza el desplazamiento */
+  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
+  gap: 20px;       /* Espaciado entre tarjetas */
+  justify-content: center; /* Centra los elementos */
 }
 
 .gastos::-webkit-scrollbar {
@@ -813,7 +809,7 @@ li:hover .tooltip {
 
 .chat-body {
   padding: 10px;
-  flex: 1; /* Ocupa el espacio disponible entre el encabezado y el pie */
+  flex: 1; 
   overflow-y: auto;
 }
 
@@ -982,7 +978,6 @@ li:hover .tooltip {
   background-color: #45a049;
 }
 
-/* Estilos para los resultados de búsqueda */
 .search-results {
   margin-top: 10px;
 }
@@ -1011,9 +1006,160 @@ li:hover .tooltip {
   text-decoration: underline;
 }
 
-/* Línea divisoria entre resultados */
 .search-result-divider {
   margin: 10px 0;
   border: 0;
   border-top: 1px solid #ddd;
 }
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 2000; 
+}
+
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block; 
+  }
+
+  .nav-links {
+    display: none; 
+    flex-direction: column;
+    position: fixed; 
+    top: 80px;
+    right: 0;
+    width: 100%;
+    background-color: #1c1c1c;
+    text-align: center;
+    z-index: 1000; 
+  }
+
+  .nav-links.show {
+    display: flex; 
+  }
+
+  .nav-links a {
+    font-size: 16px;
+    padding: 10px 0;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav-links a:hover {
+    color: #888;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav-links {
+    font-size: 14px;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .logo span {
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 0px;
+    margin-top: 13px;
+  }
+
+  .navbar-container {
+    padding: 0 10px;
+  }
+
+  .nav-links {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background-color: #1c1c1c;
+    text-align: center;
+  }
+
+  .nav-links.show {
+    display: flex; 
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo span {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-links li {
+    margin-top: 5px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-links.show {
+    display: flex;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background-color: #1c1c1c;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .nav-links.show li {
+    padding: 10px 0;
+    border-top: 1px solid #333;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gastos {
+    flex-direction: column; /* Coloca las tarjetas en columna */
+    align-items: center;    /* Centra las tarjetas */
+    gap: 15px;              /* Espaciado entre tarjetas */
+  }
+
+  .card {
+    width: 85%;  /* Ajusta el ancho de las tarjetas */
+    max-width: 400px; /* Evita que se estiren demasiado */
+    height: auto; /* Permite que la altura se adapte */
+    margin: 0 auto; /* Centra cada tarjeta */
+  }
+
+  .card .front img {
+    width: 100%;  /* Asegura que las imágenes se ajusten al contenedor */
+    height: auto; /* Mantiene las proporciones */
+  }
+
+  .card .back {
+    padding: 15px; /* Ajusta el padding en pantallas pequeñas */
+  }
+}
+
+

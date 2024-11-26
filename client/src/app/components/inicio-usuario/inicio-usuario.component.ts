@@ -8,6 +8,8 @@ import { VideoService } from '../../services/video.service';
 import { ElementRef, Renderer2 } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
 import { HttpClient } from '@angular/common/http';
+import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from '../../models/Usuario';
 
 @Component({
   selector: 'app-inicio-usuario',
@@ -32,6 +34,9 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   isGooglePopupVisible: boolean = false;
   videoUrl: string;
   chatId: string = '6661979365';
+  usuario: Usuario | null = null;
+  errorMessage: string | null = null;
+  isMenuVisible: boolean = false;
 
   suggestions: string[] = [
     "Cómo hacer un presupuesto",
@@ -66,6 +71,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
     private telegramService: TelegramService,
     private renderer: Renderer2,
     private videoService: VideoService,
+    private usuarioService: UsuarioService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
@@ -74,6 +80,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.idUsuario = localStorage.getItem('IdUsuario');
       if (this.idUsuario) {
+        this.loadUsuario();
         this.loadPresupuestos();
         this.loadTweets();
       } else {
@@ -91,6 +98,22 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       window.addEventListener('load', () => {
         this.getCurrentLocation();
       });
+    }
+  }
+
+  loadUsuario() {
+    if (this.idUsuario) {
+      this.usuarioService.getUsuarioPorId(this.idUsuario).subscribe(
+        (usuario: Usuario) => {
+          this.usuario = usuario;
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+          this.errorMessage = 'Ocurrió un error al cargar los detalles del usuario.';
+        }
+      );
+    } else {
+      this.errorMessage = 'No se ha encontrado el ID de usuario. Por favor, inicie sesión nuevamente.';
     }
   }
 
@@ -297,6 +320,10 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
     this.filteredSuggestions = this.suggestions.filter(suggestion =>
       suggestion.toLowerCase().includes(query.toLowerCase())
     );
+  }
+
+  toggleMenu(): void { //Nuevo
+    this.isMenuVisible = !this.isMenuVisible;
   }
 }
 

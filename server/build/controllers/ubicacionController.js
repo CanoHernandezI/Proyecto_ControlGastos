@@ -17,7 +17,6 @@ const database_1 = __importDefault(require("../database"));
 const axios_1 = __importDefault(require("axios"));
 const mapboxToken = 'pk.eyJ1IjoiaXNhYWNjYW5vaCIsImEiOiJjbTF1MW40djEwOG91MmlvbDVvM2pudDNkIn0.HwWvhLZXDgZCW4Sa3WDYmA';
 class UbicacionController {
-    // Iniciar una nueva ruta
     iniciarRuta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUsuario } = req.body;
@@ -32,7 +31,6 @@ class UbicacionController {
             }
         });
     }
-    // Guardar ubicación con el IdRuta
     guardarUbicacion(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
@@ -50,7 +48,6 @@ class UbicacionController {
             }
         });
     }
-    // Actualizar hora de salida en la ubicación
     actualizarHoraSalida(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUbicacion, horaSalida } = req.body;
@@ -64,7 +61,6 @@ class UbicacionController {
             }
         });
     }
-    // Finalizar la ruta
     finalizarRuta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idRuta } = req.body;
@@ -78,7 +74,6 @@ class UbicacionController {
             }
         });
     }
-    // Obtener todas las rutas de un usuario con tiempos de permanencia
     obtenerRutas(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idUsuario } = req.params;

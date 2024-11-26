@@ -357,39 +357,74 @@ body {
   transform: translate(0.1em, 0.1em);
 }
 
-.video-popup {
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  width: 560px;
-  height: 315px;
-  border: 4px solid #ccc;
-  background-color: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  resize: both;
-  overflow: hidden;
-  cursor: move;
-  z-index: 1000;
-  padding-left: 20px; /* Espacio adicional para el pseudo-elemento en el borde izquierdo */
-}
+@media screen and (max-width: 768px) {
+  .logo span {
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 0px;
+    margin-top: 13px;
+  }
+  
+  .main-content .Btn {
+    margin-left: 280px;
+    margin-top: -40px;
+  }
 
-.video-popup::before {
-  content: '⇔'; /* Puedes cambiar este símbolo por otro que prefieras */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20px; /* Ancho del borde izquierdo */
-  height: 100%;
-  background-color: #ddd; /* Color del borde */
-  color: #333; /* Color del símbolo */
-  font-size: 18px; /* Tamaño del símbolo */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: move; /* Cursor de movimiento */
-}
+  .expenses-table {
+    width: 100%;
+    font-size: 12px;
+  }
 
-.video-popup iframe {
-  width: calc(100% - 20px); /* Ajustar el ancho del iframe para evitar que se superponga con el borde izquierdo */
-  height: 100%;
+  .expenses-table th,
+  .expenses-table td {
+    padding: 5px;
+  }
+
+  .expenses-table thead {
+    display: none;
+  }
+
+  .expenses-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  .expenses-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .expenses-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .expenses-table tbody td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .button_descargar {
+    position: relative;
+    font-family: sans-serif;
+    padding: 0.4em 2em; 
+    font-size: 1.1em;   
+    background-color: #8b2115;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    color: #fff2cc;
+    font-weight: 600;
+    margin-right: 80px;
+    margin-bottom: 20px;
+    box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
 }

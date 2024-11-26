@@ -33,7 +33,6 @@ class TarjetaController {
     simularTransferencia(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { IdUsuario, IdTarjeta, monto } = req.body;
-            // Obtener la tarjeta del usuario
             const tarjeta = yield database_1.default.query('SELECT * FROM Tarjeta WHERE IdTarjeta = ? AND IdUsuario = ?', [IdTarjeta, IdUsuario]);
             if (tarjeta.length === 0) {
                 res.status(404).json({ message: 'Tarjeta no encontrada o no pertenece al usuario' });
@@ -57,7 +56,6 @@ class TarjetaController {
                 ],
             });
             try {
-                // Crear la orden de PayPal
                 const order = yield paypalConfig_1.default.execute(request);
                 console.log('Order ID: ', order.result.id);
                 const nuevoSaldo = saldoActual - monto;

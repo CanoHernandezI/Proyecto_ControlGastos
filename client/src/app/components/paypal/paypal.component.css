@@ -337,7 +337,7 @@ button.cancelar {
     background-color: #ccc;
 }
 
-/* From Uiverse.io by vinodjangid07 */ 
+/* From Uiverse.io by vinodjangid07 */
 button.confirmar {
     width: 130px;
     height: 40px;
@@ -354,17 +354,17 @@ button.confirmar {
     position: relative;
     overflow: hidden;
     transition-duration: .3s;
-  }
-  
-  .svgIcon {
+}
+
+.svgIcon {
     width: 16px;
-  }
-  
-  .svgIcon path {
+}
+
+.svgIcon path {
     fill: white;
-  }
-  
-  .confirmar::before {
+}
+
+.confirmar::before {
     width: 130px;
     height: 130px;
     position: absolute;
@@ -375,18 +375,18 @@ button.confirmar {
     top: 0;
     transition-duration: .3s;
     mix-blend-mode: difference;
-  }
-  
-  .confirmar:hover::before {
+}
+
+.confirmar:hover::before {
     transition-duration: .3s;
-    transform: translate(100%,-50%);
+    transform: translate(100%, -50%);
     border-radius: 0;
-  }
-  
-  .confirmar:active {
-    transform: translate(5px,5px);
+}
+
+.confirmar:active {
+    transform: translate(5px, 5px);
     transition-duration: .3s;
-  }
+}
 
 @media (max-width: 768px) {
     .row {
@@ -465,4 +465,83 @@ button.confirmar {
 
 .btn-eliminar i {
     font-size: 16px;
+}
+
+/* Añade esta parte al final de tu CSS */
+
+@media screen and (max-width: 768px) {
+    .logo span {
+        font-size: 20px;
+        font-weight: bold;
+        white-space: nowrap;
+        margin-left: 0px;
+        margin-top: 13px;
+    }
+
+    .row {
+        flex-direction: column;
+        margin: 0;
+        /* Elimina márgenes adicionales */
+    }
+
+    .column {
+        width: 90%;
+        /* Reduce el ancho para que no se vean tan grandes */
+        padding: 10px;
+        /* Incrementa el padding ligeramente para mejor estética */
+        margin: 0 auto;
+        /* Centra las columnas */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 95%;
+        /* Ajusta el ancho de los campos */
+        font-size: 14px;
+        /* Reduce ligeramente el tamaño de fuente */
+        padding: 10px;
+        /* Ajusta el padding interno */
+        margin-bottom: 10px;
+        /* Menos espacio entre los campos */
+    }
+
+    .button-group {
+        flex-direction: column;
+        /* Apila los botones verticalmente */
+        align-items: center;
+        /* Centra los botones */
+    }
+
+    button {
+        width: 90%;
+        /* Ajusta el ancho de los botones */
+        margin-bottom: 10px;
+        /* Añade espacio inferior entre los botones */
+    }
+
+    form {
+        margin-top: 20px;
+        /* Agrega un pequeño margen superior */
+    }
+
+    .transferencia-container {
+        padding: 15px;
+        /* Ajusta el padding interno para espacios pequeños */
+        width: 95%;
+        /* Adapta el contenedor */
+        box-shadow: none;
+        /* Elimina sombras innecesarias para simplicidad */
+    }
+
+    h2 {
+        font-size: 18px;
+        /* Reduce el tamaño del título para que se ajuste */
+        margin-bottom: 10px;
+    }
+
+    section {
+        padding: 15px;
+        border-radius: 8px;
+    }
 }

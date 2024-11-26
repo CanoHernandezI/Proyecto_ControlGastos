@@ -15,7 +15,8 @@
                             <span>CONTROL GASTOS</span>
                         </a>
                     </div>
-                    <ul class="nav-links">
+                    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+                    <ul class="styled-list nav-links" [class.show]="isMenuVisible" id="nav-links">
                         <li><a routerLink="/resumen">Resumen</a></li>
                         <li><a routerLink="/home">Cerrar sesión</a></li>
                         <li><a routerLink="/usuario">Usuario</a></li>
@@ -153,7 +154,6 @@
         </div>
         <div class="floating-container-google" id="google-popup"
             [style.display]="isGooglePopupVisible ? 'block' : 'none'">
-            <!-- Contenedor para el buscador -->
             <div class="searchbar">
                 <div class="searchbar-wrapper">
                     <div class="searchbar-left">
@@ -203,46 +203,48 @@
         <main class="main-content">
             <section class="gastos">
                 <div class="card">
-                    <div class="face front">
-                        <img src="/assets/F1.jpg" alt="">
-                        <h3>Gastos</h3>
+                  <div class="face front">
+                    <img src="/assets/F1.jpg" alt="Gastos">
+                    <h3>Gastos</h3>
+                  </div>
+                  <div class="face back">
+                    <h2>Gasto</h2>
+                    <p>Aquí puedes registrar y seguir todas las salidas de dinero.</p>
+                    <div class="enlace">
+                      <a routerLink="/gastos/list">Ver mis gastos...</a>
                     </div>
-                    <div class="face back">
-                        <h2>Gasto</h2>
-                        <p>Aquí puedes registrar y seguir todas las salidas de dinero.</p>
-                        <div class="enlace">
-                            <a routerLink="/gastos/list">Ver mis gastos...</a>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-
+              
                 <div class="card">
-                    <div class="face front">
-                        <img src="/assets/F2.jpg" alt="">
-                        <h3>Ingresos</h3>
+                  <div class="face front">
+                    <img src="/assets/F2.jpg" alt="Ingresos">
+                    <h3>Ingresos</h3>
+                  </div>
+                  <div class="face back">
+                    <h2>Ingreso</h2>
+                    <p>Registra todas las entradas de dinero.</p>
+                    <div class="enlace">
+                      <a routerLink="/ingresos/list">Ver ingresos...</a>
                     </div>
-                    <div class="face back">
-                        <h2>Ingreso</h2>
-                        <p>Registra todas las entradas de dinero.</p>
-                        <div class="enlace">
-                            <a routerLink="/ingresos/list">Ver ingresos...</a>
-                        </div>
-                    </div>
+                  </div>
                 </div>
+              
                 <div class="card">
-                    <div class="face front">
-                        <img src="/assets/F3.jpg" alt="">
-                        <h3>Servicios</h3>
+                  <div class="face front">
+                    <img src="/assets/F3.jpg" alt="Servicios">
+                    <h3>Servicios</h3>
+                  </div>
+                  <div class="face back">
+                    <h2>Servicio</h2>
+                    <p>Administra todos los servicios que has contratado.</p>
+                    <div class="enlace">
+                      <a routerLink="/servicios/list">Ver mis servicios...</a>
                     </div>
-                    <div class="face back">
-                        <h2>Servicio</h2>
-                        <p>Administra todos los servicios que has contratado.</p>
-                        <div class="enlace">
-                            <a routerLink="/servicios/list">Ver mis servicios...</a>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-            </section>
+              </section>
+              
         </main>
     </div>
 </body>
