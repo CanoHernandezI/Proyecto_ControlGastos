@@ -61,7 +61,7 @@ class UbicacionController {
       res.status(500).json({ message: 'Error al finalizar la ruta' });
     }
   }
-
+  
   public async obtenerRutas(req: Request, res: Response): Promise<void> {
     const { idUsuario } = req.params;
 

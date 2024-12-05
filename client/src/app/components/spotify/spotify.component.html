@@ -1,42 +1,47 @@
 <div class="container">
     <header class="header">
-      <nav class="navbar">
-        <div class="navbar-container">
-          <div class="logo">
-            <a routerLink="/inicio-usuario">
-              <span>CONTROL GASTOS</span>
-            </a>
-          </div>
-          <ul class="nav-links">
-          </ul>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo">
+                    <a routerLink="/inicio-usuario">
+                        <span>CONTROL GASTOS</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="welcome-bar">
+            Podcast
         </div>
-      </nav>
     </header>
     <main class="main-content">
-      <div *ngIf="!accessToken">
-        <div class="spotify-auth-container white-container"> <!-- Nuevo contenedor para el recuadro de fondo -->
-          <h1>Podcasts de Finanzas en Spotify</h1>
-          <button class="submit-btn" (click)="authorizeSpotify()">Conectar con Spotify</button>
+        <br>
+        <div *ngIf="isLoadingPodcasts">Cargando podcasts...</div>
+        <div *ngIf="error" class="text-red">{{ error }}</div>
+
+        <div *ngIf="selectedPodcastEmbedUrl" class="spotify-player">
+            <iframe 
+                [src]="selectedPodcastEmbedUrl" 
+                width="100%" 
+                height="380" 
+                frameborder="0" 
+                allowtransparency="true" 
+                allow="encrypted-media">
+            </iframe>
         </div>
-      </div>
-      
-      <div *ngIf="isLoadingPodcasts" class="text-center py-4">
-        <p>Cargando podcasts...</p>
-      </div>
-  
-      <div *ngIf="podcasts && podcasts.length > 0">
-        <div class="podcast-list">
-          <div *ngFor="let podcast of podcasts; trackBy: trackByPodcastId" class="podcast-card white-container">
-            <div class="podcast-background"> <!-- Cuadro de fondo adicional -->
-              <img [src]="podcast.images[0]?.url" alt="Podcast cover" class="podcast-image">
-              <div class="podcast-content">
-                <h2 class="podcast-title">{{ podcast.name }}</h2>
-                <p class="podcast-description">{{ podcast.description }}</p>
-                <a [href]="podcast.external_urls.spotify" target="_blank" class="spotify-button">Escuchar en Spotify</a>
-              </div>
+
+        <div class="white-container">
+            <h1>Seleccione su podcast favorito.</h1>
+            <div class="podcast-grid">
+                <div *ngFor="let podcast of podcasts" class="podcast-card" (click)="selectPodcast(podcast.id)">
+                    <div class="podcast-background">
+                        <img class="podcast-image" [src]="podcast.images[0]?.url" alt="Imagen del Podcast">
+                        <div class="podcast-content">
+                            <h3 class="podcast-title">{{ podcast.name }}</h3>
+                            <p class="podcast-description">{{ podcast.description }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </main>
-  </div>
+</div>
