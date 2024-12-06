@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1520px;
     margin: 0 auto;
     padding: 0 20px;
   }
@@ -405,3 +405,15 @@
     background-color: #36313f;
     transform: translateY(-2px);
   }
+
+  .logo {
+    text-align: right; /* Mueve el texto hacia la derecha dentro del contenedor */
+    padding-right: 20px; /* Ajusta el espaciado desde el borde derecho */
+}
+
+.control-gastos-text {
+  margin-left: 500px; /* Ajusta el valor según el desplazamiento deseado */
+  display: inline-block; /* Asegura que respete los márgenes */
+  font-size: 16px; /* Opcional: ajusta el tamaño */
+  font-weight: bold; /* Opcional: énfasis adicional */
+}
