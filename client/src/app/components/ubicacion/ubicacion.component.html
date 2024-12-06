@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,24 +25,25 @@
             </div>
         </header>
         <main class="main-content">
+            <div class="dropdown">
+                <button class="dropdown-btn">Rutas Guardadas</button>
+                <div class="dropdown-content">
+                    <div *ngFor="let ruta of rutasCompletas">
+                        <button (click)="dibujarRuta(ruta)">
+                            Ruta desde {{ ruta.FechaInicio | date:'short' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
             <section class="gastos">
                 <!-- Mapa de ubicación -->
-                <div id="map" style="width: 100%; height: 500px;"></div>
-                <button (click)="irALaUbicacionActual()" class="btn-location" style="margin-top: 20px;">
+                <div id="map" class="map-styled"></div>
+                <button (click)="irALaUbicacionActual()" class="btn-location">
                     <i class="fas fa-map-marker-alt fa-2x"></i> 
                 </button>
 
-                <!-- Botón para finalizar la ruta -->
-                <button (click)="finalizarRuta()" style="margin-top: 20px;">
-                    Finalizar Ruta
-                </button>
-
-                <!-- Lista de rutas completas con botones para visualizar cada una -->
-                <div *ngFor="let ruta of rutasCompletas" style="margin-top: 10px;">
-                    <button (click)="dibujarRuta(ruta)">
-                        Ruta desde {{ ruta.FechaInicio | date:'short' }}
-                    </button>
-                </div>
+                <!-- Menú desplegable para las rutas -->
+                
             </section>
         </main>
     </div>

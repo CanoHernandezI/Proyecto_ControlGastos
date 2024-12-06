@@ -19,6 +19,7 @@ import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
+import { PostTweetComponent } from './components/post-tweet/post-tweet.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: "tarjeta", component: TarjetaComponent},
   { path: "finanzas", component: FinanzasComponent},
   { path: "spotify", component: SpotifyComponent},
+  { path: "post-tweets", component: PostTweetComponent},
   { path: '**', redirectTo: '/' },
 ];
 

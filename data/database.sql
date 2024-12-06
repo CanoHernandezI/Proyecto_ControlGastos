@@ -18,6 +18,8 @@ CREATE TABLE Usuario (
     CodigoAdmin VARCHAR(50)
 );
 
+ALTER TABLE Usuario MODIFY Rol ENUM('admin', 'normal', 'superAdmin') NOT NULL DEFAULT 'normal';
+
 CREATE TABLE Presupuesto (
     IdUsuario INT PRIMARY KEY,
     PresupuestoTotal DECIMAL(10, 2),

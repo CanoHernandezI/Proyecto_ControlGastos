@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, ViewChild, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PresupuestosService } from '../../services/presupuestos.service';
 import { Router } from '@angular/router';
@@ -37,6 +37,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   usuario: Usuario | null = null;
   errorMessage: string | null = null;
   isMenuVisible: boolean = false;
+  rolUsuario: string | null = null;
 
   suggestions: string[] = [
     "Cómo hacer un presupuesto",
@@ -79,12 +80,14 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.idUsuario = localStorage.getItem('IdUsuario');
-      if (this.idUsuario) {
+      this.rolUsuario = localStorage.getItem('RolUsuario'); // Recuperar el rol del usuario
+
+      if (this.idUsuario && this.rolUsuario) {
         this.loadUsuario();
         this.loadPresupuestos();
         this.loadTweets();
       } else {
-        console.error('Usuario no autenticado');
+        console.error('Usuario no autenticado o rol no disponible');
         this.router.navigate(['/login']);
       }
     } else {
@@ -92,7 +95,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/login']);
     }
   }
-
+  
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('load', () => {
@@ -321,10 +324,31 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       suggestion.toLowerCase().includes(query.toLowerCase())
     );
   }
-
-  toggleMenu(): void { //Nuevo
-    this.isMenuVisible = !this.isMenuVisible;
+  
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const isInsidePopup = target.closest('.floating-container, .nav-links, .icon-bar');
+    if (!isInsidePopup) {
+      this.isTweetsPopupVisible = false;
+      this.isYoutubePopupVisible = false;
+      this.isTelegramPopupVisible = false;
+      this.isGooglePopupVisible = false;
+    }
   }
+
+  toggleMenu(): void {
+    this.isMenuVisible = !this.isMenuVisible;
+  
+    const body = document.body;
+    if (this.isMenuVisible) {
+      body.classList.add('no-scroll'); // Bloquea el scroll
+    } else {
+      body.classList.remove('no-scroll'); // Permite el scroll
+    }
+  }
+  
+  
 }
 
 

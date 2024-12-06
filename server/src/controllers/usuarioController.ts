@@ -12,7 +12,14 @@ class UsuarioController {
         try {
             const { Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin } = req.body;
 
-            if (Rol === 'admin') {
+            if (Rol === 'superAdmin') {
+                const nuevoCodigo = uuidv4();
+                await pool.query('INSERT INTO Usuario SET ?', [
+                    { Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin: nuevoCodigo }
+                ]);
+                res.json({ message: 'SuperAdmin creado con éxito', codigo: nuevoCodigo });
+    
+            }else if (Rol === 'admin') {
                 const nuevoCodigo = uuidv4(); 
                 await pool.query('INSERT INTO Usuario set ?', [{ Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin: nuevoCodigo }]);
                 res.json({ message: 'Administrador creado con éxito', codigo: nuevoCodigo });

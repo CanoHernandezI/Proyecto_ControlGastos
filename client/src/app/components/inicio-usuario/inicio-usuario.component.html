@@ -18,6 +18,7 @@
                     <button class="menu-toggle" (click)="toggleMenu()">☰</button>
                     <ul class="styled-list nav-links" [class.show]="isMenuVisible" id="nav-links">
                         <li><a routerLink="/resumen">Resumen</a></li>
+                        <li><a routerLink="/post-tweets" *ngIf="rolUsuario === 'superAdmin'">Publicar Anuncios</a></li>
                         <li><a routerLink="/home">Cerrar sesión</a></li>
                         <li><a routerLink="/usuario">Usuario</a></li>
                     </ul>

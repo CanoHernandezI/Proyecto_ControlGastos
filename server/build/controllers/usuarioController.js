@@ -26,7 +26,14 @@ class UsuarioController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin } = req.body;
-                if (Rol === 'admin') {
+                if (Rol === 'superAdmin') {
+                    const nuevoCodigo = (0, uuid_1.v4)();
+                    yield database_1.default.query('INSERT INTO Usuario SET ?', [
+                        { Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin: nuevoCodigo }
+                    ]);
+                    res.json({ message: 'SuperAdmin creado con éxito', codigo: nuevoCodigo });
+                }
+                else if (Rol === 'admin') {
                     const nuevoCodigo = (0, uuid_1.v4)();
                     yield database_1.default.query('INSERT INTO Usuario set ?', [{ Nombre, ApPaterno, ApMaterno, NumTelefono, Correo, FechaNacimiento, Usuario, Contrasena, Rol, CodigoAdmin: nuevoCodigo }]);
                     res.json({ message: 'Administrador creado con éxito', codigo: nuevoCodigo });
