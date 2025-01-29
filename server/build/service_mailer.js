@@ -17,19 +17,25 @@ const usuarioController_1 = __importDefault(require("./controllers/usuarioContro
 function envioCorreo(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            //Primero se obtiene el correo del usuario actual
-            const req = { params: { id: userId } };
+            // Obtiene el correo del usuario actual
             const gmailRes = yield usuarioController_1.default.getGmail(userId);
-            //Verifica si encontro correo
+            // Verifica si encontró el correo
             if (!gmailRes) {
-                console.error('Corro no encotrado');
+                console.error("Correo no encontrado");
                 return;
             }
             const info = yield mailer_config_1.transporter.sendMail({
+<<<<<<< HEAD
                 from: '"Pruebas" <luismanuelr245@gmail.com>', // sender address
                 to: gmailRes, // list of receivers
                 subject: "Hello word", // Subject line
                 html: "<b>Hello world?</b>", // html body
+=======
+                from: '"Pruebas" <luismanuelr245@example.com>', // Asegúrate de usar un correo válido
+                to: gmailRes, // Lista de destinatarios
+                subject: "Hello World", // Asunto del correo
+                html: "<b>Hello world?</b>", // Cuerpo en HTML
+>>>>>>> 8491f37a2b39f49e05c7505cfab8a1ab59649615
             });
             console.log("Correo enviado: %s", info.messageId);
         }
@@ -38,5 +44,5 @@ function envioCorreo(userId) {
         }
     });
 }
-//Lama a la funcion con el ID de usuario valido
+// Llama a la función con un ID de usuario válido
 envioCorreo(1);

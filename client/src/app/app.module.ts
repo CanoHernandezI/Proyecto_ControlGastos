@@ -54,7 +54,11 @@ registerLocaleData(localeEs, 'es');
         FinanzasComponent,
         SpotifyComponent,
         CorreoFormComponent,
+<<<<<<< HEAD
         PostTweetComponent,
+=======
+        PostTweetComponent
+>>>>>>> 8491f37a2b39f49e05c7505cfab8a1ab59649615
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
