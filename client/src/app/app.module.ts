@@ -27,11 +27,8 @@ import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
-<<<<<<< HEAD
 import { CorreoFormComponent } from './components/correo-form/correo-form.component';
-=======
 import { PostTweetComponent } from './components/post-tweet/post-tweet.component';
->>>>>>> afc3709bad0ca8fe336aca72a76df9d8e4da7b9f
 
 registerLocaleData(localeEs, 'es');
 
@@ -56,11 +53,8 @@ registerLocaleData(localeEs, 'es');
         SafeUrlPipe,
         FinanzasComponent,
         SpotifyComponent,
-<<<<<<< HEAD
         CorreoFormComponent,
-=======
         PostTweetComponent,
->>>>>>> afc3709bad0ca8fe336aca72a76df9d8e4da7b9f
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

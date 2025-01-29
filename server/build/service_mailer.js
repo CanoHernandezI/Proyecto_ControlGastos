@@ -26,7 +26,7 @@ function envioCorreo(userId) {
                 return;
             }
             const info = yield mailer_config_1.transporter.sendMail({
-                from: '"Pruebas" <luismanuelr245@>', // sender address
+                from: '"Pruebas" <luismanuelr245@gmail.com>', // sender address
                 to: gmailRes, // list of receivers
                 subject: "Hello word", // Subject line
                 html: "<b>Hello world?</b>", // html body
