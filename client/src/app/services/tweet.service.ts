@@ -6,11 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TweetService {
-  private apiUrl = 'http://localhost:3000/api/twitter/tweets'; // URL de tu API
+  private apiUrl = 'http://localhost:3000/api/twitter/tweets'; 
+  private postTweetUrl = 'http://localhost:3000/api/twitter/tweet';
 
   constructor(private http: HttpClient) {}
 
   getTweets(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  postTweet(status: string): Observable<any> {
+    return this.http.post<any>(this.postTweetUrl, { status });
   }
 }

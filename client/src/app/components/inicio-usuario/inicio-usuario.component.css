@@ -93,6 +93,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  z-index: 2000;
 }
 
 
@@ -230,6 +231,7 @@ section h2 {
   height: 400px;
   position: relative;
   perspective: 1000px;
+  display: block;
 }
 
 .card .face {
@@ -1037,6 +1039,7 @@ li:hover .tooltip {
     background-color: #1c1c1c;
     text-align: center;
     z-index: 1000; 
+    padding-bottom: 20px;  
   }
 
   .nav-links.show {
@@ -1054,6 +1057,12 @@ li:hover .tooltip {
   .nav-links a:hover {
     color: #888;
   }
+
+  .no-scroll {
+    overflow: hidden; /* Deshabilita el desplazamiento */
+    height: 100vh; /* Previene que el contenido fuera del viewport sea accesible */
+  }
+  
 }
 
 @media screen and (max-width: 480px) {
@@ -1137,29 +1146,4 @@ li:hover .tooltip {
     border-top: 1px solid #333;
   }
 }
-
-@media screen and (max-width: 768px) {
-  .gastos {
-    flex-direction: column; /* Coloca las tarjetas en columna */
-    align-items: center;    /* Centra las tarjetas */
-    gap: 15px;              /* Espaciado entre tarjetas */
-  }
-
-  .card {
-    width: 85%;  /* Ajusta el ancho de las tarjetas */
-    max-width: 400px; /* Evita que se estiren demasiado */
-    height: auto; /* Permite que la altura se adapte */
-    margin: 0 auto; /* Centra cada tarjeta */
-  }
-
-  .card .front img {
-    width: 100%;  /* Asegura que las imágenes se ajusten al contenedor */
-    height: auto; /* Mantiene las proporciones */
-  }
-
-  .card .back {
-    padding: 15px; /* Ajusta el padding en pantallas pequeñas */
-  }
-}
-
 

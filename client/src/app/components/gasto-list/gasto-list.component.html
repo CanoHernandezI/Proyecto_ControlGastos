@@ -49,8 +49,9 @@
                 <th>Monto</th>
                 <th>Fecha de transaccion</th>
                 <th>Metodo de Pago</th>
-                <th *ngIf="rolUsuario === 'admin'">Nombre</th>
-                <th *ngIf="rolUsuario === 'admin'">Acciones</th>
+                <th *ngIf="rolUsuario === 'admin' || rolUsuario === 'superAdmin'">Nombre</th>
+                <th *ngIf="rolUsuario === 'superAdmin'">Administrador</th>
+                <th *ngIf="rolUsuario === 'admin' || rolUsuario === 'superAdmin'">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -60,8 +61,10 @@
                 <td data-label="Monto">$ {{ gasto.Monto }}</td>
                 <td data-label="Fecha de transaccion">{{ gasto.FechaTransaccion | date }}</td>
                 <td data-label="Metodo de Pago">{{ gasto.MetodoPago }}</td>
-                <td *ngIf="rolUsuario === 'admin'" data-label="Nombre">{{ gasto.NombreCompleto }}</td>
-                <td *ngIf="rolUsuario === 'admin'" data-label="Acciones">
+                <td *ngIf="rolUsuario === 'admin'" data-label="Nombre">{{ gasto.NombreCompletoUsuario }}</td>
+                <td *ngIf="rolUsuario === 'superAdmin'" data-label="Nombre">{{ gasto.NombreCompletoUsuario }}</td>
+                <td *ngIf="rolUsuario === 'superAdmin'" data-label="Nombre">{{ gasto.NombreCompletoAdmin }}</td>
+                <td *ngIf="rolUsuario === 'admin' || rolUsuario === 'superAdmin'" data-label="Acciones">
                   <button class="edit-button" (click)="editGasto(gasto.IdGasto)" ><i class="fas fa-edit"></i></button>
                   <button class="delete-button" (click)="deleteGasto(gasto.IdGasto)" ><i class="fas fa-trash-alt"></i></button>
                 </td>

@@ -24,25 +24,45 @@ class GastoController {
                     res.status(404).json({ error: 'Usuario no encontrado' });
                     return;
                 }
-                const { Rol, CodigoAdmin } = usuario[0];
+                const { Rol } = usuario[0];
                 let query;
                 let params;
-                if (Rol === 'admin') {
+                if (Rol === 'superAdmin') {
                     query = `
-          SELECT G.*, CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompleto
-          FROM Gasto G 
-          INNER JOIN Usuario U ON G.IdUsuario = U.IdUsuario 
-          WHERE U.CodigoAdmin = ?
+            SELECT 
+                G.*, 
+                CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompletoUsuario, 
+                U.Rol AS RolUsuario,
+                CASE
+                    WHEN A.Rol = 'admin' OR A.Rol = 'superAdmin' THEN CONCAT(A.Nombre, ' ', A.ApPaterno, ' ', A.ApMaterno)
+                    ELSE NULL
+                END AS NombreCompletoAdmin
+            FROM Gasto G
+            INNER JOIN Usuario U ON G.IdUsuario = U.IdUsuario
+            LEFT JOIN Usuario A ON U.CodigoAdmin = A.CodigoAdmin AND (A.Rol = 'admin' OR A.Rol = 'superAdmin')
         `;
-                    params = [CodigoAdmin];
+                    params = [];
+                }
+                else if (Rol === 'admin') {
+                    query = `
+                SELECT 
+                    G.*, 
+                    CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompletoUsuario
+                FROM Gasto G
+                INNER JOIN Usuario U ON G.IdUsuario = U.IdUsuario
+                WHERE U.CodigoAdmin = ?
+            `;
+                    params = [usuario[0].CodigoAdmin];
                 }
                 else {
                     query = `
-          SELECT G.*, CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompleto
-          FROM Gasto G 
-          INNER JOIN Usuario U ON G.IdUsuario = U.IdUsuario 
-          WHERE G.IdUsuario = ?
-        `;
+                SELECT 
+                    G.*, 
+                    CONCAT(U.Nombre, ' ', U.ApPaterno, ' ', U.ApMaterno) AS NombreCompletoUsuario
+                FROM Gasto G
+                INNER JOIN Usuario U ON G.IdUsuario = U.IdUsuario
+                WHERE G.IdUsuario = ?
+            `;
                     params = [idUser];
                 }
                 const gastos = yield database_1.default.query(query, params);
@@ -78,10 +98,13 @@ class GastoController {
                     res.status(404).json({ error: 'Usuario no encontrado' });
                     return;
                 }
-                const { Rol, CodigoAdmin } = usuario[0];
+                const { Rol } = usuario[0];
                 let result;
-                if (Rol === 'admin') {
-                    result = yield database_1.default.query('DELETE FROM Gasto WHERE IdGasto = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Gasto.IdUsuario AND CodigoAdmin = ?)', [id, CodigoAdmin]);
+                if (Rol === 'superAdmin') {
+                    result = yield database_1.default.query('DELETE FROM Gasto WHERE IdGasto = ?', [id]);
+                }
+                else if (Rol === 'admin') {
+                    result = yield database_1.default.query('DELETE FROM Gasto WHERE IdGasto = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Gasto.IdUsuario AND CodigoAdmin = ?)', [id, usuario[0].CodigoAdmin]);
                 }
                 else {
                     result = yield database_1.default.query('DELETE FROM Gasto WHERE IdGasto = ? AND IdUsuario = ?', [id, idUser]);
@@ -90,7 +113,7 @@ class GastoController {
                     res.json({ message: 'Gasto eliminado' });
                 }
                 else {
-                    res.status(404).json({ error: 'Gasto no encontrado o el usuario no coincide' });
+                    res.status(404).json({ error: 'Gasto no encontrado o el usuario no tiene permisos' });
                 }
             }
             catch (err) {
@@ -109,10 +132,13 @@ class GastoController {
                     res.status(404).json({ error: 'Usuario no encontrado' });
                     return;
                 }
-                const { Rol, CodigoAdmin } = usuario[0];
+                const { Rol } = usuario[0];
                 let result;
-                if (Rol === 'admin') {
-                    result = yield database_1.default.query('UPDATE Gasto SET ? WHERE IdGasto = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Gasto.IdUsuario AND CodigoAdmin = ?)', [gasto, id, CodigoAdmin]);
+                if (Rol === 'superAdmin') {
+                    result = yield database_1.default.query('UPDATE Gasto SET ? WHERE IdGasto = ?', [gasto, id]);
+                }
+                else if (Rol === 'admin') {
+                    result = yield database_1.default.query('UPDATE Gasto SET ? WHERE IdGasto = ? AND EXISTS (SELECT 1 FROM Usuario WHERE IdUsuario = Gasto.IdUsuario AND CodigoAdmin = ?)', [gasto, id, usuario[0].CodigoAdmin]);
                 }
                 else {
                     result = yield database_1.default.query('UPDATE Gasto SET ? WHERE IdGasto = ? AND IdUsuario = ?', [gasto, id, idUser]);
@@ -121,7 +147,7 @@ class GastoController {
                     res.json({ message: 'Gasto actualizado' });
                 }
                 else {
-                    res.status(404).json({ error: 'Gasto no encontrado o el usuario no coincide' });
+                    res.status(404).json({ error: 'Gasto no encontrado o el usuario no tiene permisos' });
                 }
             }
             catch (err) {
@@ -142,7 +168,11 @@ class GastoController {
                 const { Rol, CodigoAdmin } = usuario[0];
                 let query;
                 let params;
-                if (Rol === 'admin') {
+                if (Rol === 'superAdmin') {
+                    query = 'SELECT * FROM Gasto WHERE IdGasto = ?';
+                    params = [id];
+                }
+                else if (Rol === 'admin') {
                     query = `
           SELECT * FROM Gasto WHERE IdGasto = ? AND EXISTS (
             SELECT 1 FROM Usuario WHERE IdUsuario = Gasto.IdUsuario AND CodigoAdmin = ?

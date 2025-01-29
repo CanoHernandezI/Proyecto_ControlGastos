@@ -51,7 +51,7 @@ export class GastoListComponent implements OnInit {
     if (this.idUsuario) {
       this.gastosService.getGastos(this.idUsuario).subscribe(
         (resp: any) => {
-          if (rolUsuario === 'admin') {
+          if (rolUsuario === 'superAdmin' || rolUsuario === 'admin') {
             this.gastos = resp;
           } else {
             this.gastos = resp; 
@@ -64,35 +64,26 @@ export class GastoListComponent implements OnInit {
 
   deleteGasto(id: number) {
     if (this.idUsuario) {
-      if (this.rolUsuario === 'admin') {
-        this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Gasto eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      } else {
-        this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
-          () => {
-            this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
-            this.loadPresupuestos();
-            this.notificationService.showNotification('Gasto eliminado correctamente');
-          },
-          err => console.log(err)
-        );
-      }
+      // El superAdmin puede eliminar cualquier gasto
+      this.gastosService.deleteGasto(id.toString(), this.idUsuario).subscribe(
+        () => {
+          this.gastos = this.gastos.filter((gasto: any) => gasto.IdGasto !== id);
+          this.loadPresupuestos();
+          this.notificationService.showNotification('Gasto eliminado correctamente');
+        },
+        err => {
+          console.error('Error al eliminar el gasto:', err);
+          this.notificationService.showNotification('Error al eliminar el gasto');
+        }
+      );
     }
   }
-
+  
   editGasto(id: number) {
-    if (this.rolUsuario === 'admin') {
-      this.router.navigate(['/gastos/edit', id]);
-    } else {
-      this.router.navigate(['/gastos/edit', id]);
-    }
+    // El superAdmin puede editar cualquier gasto
+    this.router.navigate(['/gastos/edit', id]);
   }
+  
 
   loadPresupuestos() {
     if (this.idUsuario) {
