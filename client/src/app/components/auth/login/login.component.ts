@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { NotificationService } from '../../../services/notification.service';
+import { CorreoService } from '../../../services/correo.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService, 
+    private correoService: CorreoService,
     private router: Router,
     private notificationService: NotificationService
   ) {}
@@ -47,10 +49,24 @@ export class LoginComponent implements OnInit {
         const usuario = usuarios.find(u => u.Usuario === username && u.Contrasena === password);
 
         if (usuario) {
-          localStorage.setItem('IdUsuario', usuario.IdUsuario);
+          const userId = usuario.IdUsuario;
+
+          // Guarda los datos del usuario
+          localStorage.setItem('IdUsuario', userId);
           localStorage.setItem('RolUsuario', usuario.Rol);
-          this.router.navigate(['/inicio-usuario']);
-          this.notificationService.showNotification('Inicio de sesión exitoso');
+
+          // Enviar súper token
+          this.correoService.enviarSuperToken(userId).subscribe(
+            (response) => {
+              console.log('Correo enviado:', response);
+              this.router.navigate(['/inicio-usuario']);
+              this.notificationService.showNotification('Inicio de sesión exitoso. Revisa tu correo.');
+            },
+            (error) => {
+              console.error('Error al enviar correo:', error);
+              this.errorMessage = 'Error al enviar el correo con el súper token.';
+            }
+          );
         } else {
           this.errorMessage = 'Usuario o contraseña incorrectos';
         }

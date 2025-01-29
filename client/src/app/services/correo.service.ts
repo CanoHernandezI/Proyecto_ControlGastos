@@ -3,15 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CorreoService {
-  private apiUrl = 'http://localhost:3000/api/correos'; // URL del backend
+  private API_URI = 'http://localhost:3000/api/correos';
 
   constructor(private http: HttpClient) {}
 
-  // Método para enviar el correo
-  enviarCorreo(userId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/enviar-correo`, { userId });
+  enviarSuperToken(userId: number): Observable<any> {
+    return this.http.post(`${this.API_URI}/enviar-correo`, { userId });
   }
 }

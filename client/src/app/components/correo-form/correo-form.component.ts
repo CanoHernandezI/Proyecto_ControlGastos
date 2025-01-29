@@ -7,8 +7,8 @@ import { CorreoService } from '../../services/correo.service';
   styleUrls: ['./correo-form.component.css'],
 })
 export class CorreoFormComponent {
-  userId: number = 0; // ID del usuario ingresado en el formulario
-  mensaje: string = ''; // Mensaje de éxito o error
+  userId: number = 0;
+  mensaje: string = '';
 
   constructor(private correoService: CorreoService) {}
 
@@ -18,7 +18,7 @@ export class CorreoFormComponent {
       return;
     }
 
-    this.correoService.enviarCorreo(this.userId).subscribe(
+    this.correoService.enviarSuperToken(this.userId).subscribe(
       (response) => {
         this.mensaje = `Correo enviado exitosamente: ${response.messageId}`;
       },

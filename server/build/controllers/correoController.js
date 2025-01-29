@@ -12,31 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mailer_config_1 = require("../mailer_config");
 const usuarioController_1 = __importDefault(require("./usuarioController"));
 const correoController = {
     envioCorreo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { userId } = req.body; // userId recibido desde el frontend
-                // Validación del parámetro userId
+                const { userId } = req.body;
+                // Validación del userId
                 if (!userId || typeof userId !== "number") {
                     return res.status(400).json({ error: "El userId es inválido o no se proporcionó." });
                 }
-                // Obtener el correo electrónico del usuario
+                // Obtener el correo del usuario desde el usuarioController
                 const gmailRes = yield usuarioController_1.default.getGmail(userId);
-                if (gmailRes == null) {
+                if (!gmailRes) {
                     return res.status(404).json({ error: "Correo no encontrado para este usuario." });
                 }
-                // Enviar correo
+                // Generar el supertoken (se puede configurar una clave secreta usando variables de entorno)
+                const supertoken = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET || "default_secret", { expiresIn: "1h" });
+                // Crear el contenido HTML para el correo
+                const htmlContent = `
+        <div style="font-family: Arial, sans-serif; background-color: #111; color: #fff; padding: 20px; max-width: 600px; margin: auto; border-radius: 8px;">
+          <h2 style="text-align: center; background-color: #222; padding: 15px; border-radius: 8px;">Inicio de Sesión</h2>
+          <p style="text-align: center;">Hola,</p>
+          <p style="text-align: center;">Este es tu supertoken para iniciar sesión:</p>
+          <p style="text-align: center; font-size: 18px; font-weight: bold; background-color: #333; padding: 10px; border-radius: 5px;">${supertoken}</p>
+          <p style="text-align: center;">Este token expirará en <strong>1 hora</strong>.</p>
+          <p style="text-align: center; font-size: 14px; color: #aaa;">Si no solicitaste esto, ignora este mensaje.</p>
+        </div>
+      `;
+                // Enviar el correo usando transporter
                 const info = yield mailer_config_1.transporter.sendMail({
-                    from: '"Pruebas" <luismanuelr245@gmail.com>', // dirección del remitente
-                    to: gmailRes, // destinatario
-                    subject: "Hello World", // asunto
-                    html: "<b>Hello world?</b>", // contenido HTML
+                    from: '"Pruebas" <luismanuelr245@gmail.com>',
+                    to: gmailRes,
+                    subject: "Supertoken para Inicio de Sesión",
+                    html: htmlContent,
                 });
                 console.log("Correo enviado: %s", info.messageId);
-                return res.status(200).json({ message: "Correo enviado exitosamente", messageId: info.messageId });
+                return res.status(200).json({ message: "Correo enviado exitosamente", token: supertoken });
             }
             catch (error) {
                 console.error("Error al enviar el correo:", error);

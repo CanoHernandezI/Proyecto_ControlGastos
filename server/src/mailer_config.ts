@@ -1,20 +1,25 @@
-import nodemailr = require('nodemailer');
+import nodemailer from "nodemailer"; // Corrección de importación
 
-export const transporter = nodemailr.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for port 465, false for other ports
-    auth: {
-      user: "luismanuelr245@gmail.com",
-      pass: "koon kkua inwp avjc",
-    },
-    tls: {
-        rejectUnauthorized: false,
-    },
-  }); 
+export const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true para el puerto 465, false para otros
+  auth: {
+    user: "luismanuelr245@gmail.com",
+    pass: "koon kkua inwp avjc", // Usa variables de entorno para mayor seguridad
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
 
-  transporter.verify().then(() => {
-    console.log('Listo para envio de correos')
-  }).catch((err) =>{
-    console.error('Error al verificar el transporte:', err);
+// Verifica el transporte
+transporter
+  .verify()
+  .then(() => {
+    console.log("Listo para envío de correos");
+  })
+  .catch((err: Error) => {
+    // Corrección de tipo
+    console.error("Error al verificar el transporte:", err);
   });
