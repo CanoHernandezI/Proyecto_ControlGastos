@@ -4,6 +4,7 @@ export default {
         user: 'root',
         password: '',
         database: 'ControlGasto'
+        
     }, twitterConfig: {
         apiKey: 'kTYmehU9t2HFwAFGQJSqkApWk',
         apiSecretKey: '8vut5c6bgOTYGuNVDS23wE1UgplWOoATPofbSUHQMmFjEIBABV',

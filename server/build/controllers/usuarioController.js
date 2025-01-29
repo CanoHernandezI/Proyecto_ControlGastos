@@ -87,6 +87,28 @@ class UsuarioController {
             }
         });
     }
+    //Metodo para obtener solo el correo del usario, principalmente para implementacion de verificacion de doble factor.
+    getGmail(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log("Buscando correo para userId:", userId); // Muestra el ID del usuario recibido
+                const result = yield database_1.default.query('SELECT Correo FROM Usuario WHERE IdUsuario = ?', [userId]); //Obtiene el correo
+                console.log("Resultado de la consulta:", result);
+                if (result.length > 0) {
+                    console.log("Correo encontrado:", result[0].Correo); // Si hay resultados, muestra el correo
+                    return result[0].Correo; // Retorna el correo si se encuentra
+                }
+                else {
+                    console.log("No se encontró un usuario con el IdUsuario proporcionado.");
+                }
+            }
+            catch (error) {
+                console.error('Error al obtener el correo', error.message);
+                console.error(error);
+            }
+            return null;
+        });
+    }
 }
 exports.usuarioController = new UsuarioController();
 exports.default = exports.usuarioController;
