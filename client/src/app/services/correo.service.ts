@@ -13,4 +13,8 @@ export class CorreoService {
   enviarSuperToken(userId: number): Observable<any> {
     return this.http.post(`${this.API_URI}/enviar-correo`, { userId });
   }
+
+  validarToken(token: string): Observable<any> {
+    return this.http.post(`${this.API_URI}/validar-token`, { token });
+  }
 }

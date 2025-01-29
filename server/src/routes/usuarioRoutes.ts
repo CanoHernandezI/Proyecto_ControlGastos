@@ -14,6 +14,7 @@ class UsuarioRoutes {
         this.router.delete('/:idUser', usuarioController.delete);
         this.router.put('/:idUser', usuarioController.update);
         this.router.get('/:identifier', usuarioController.getUserOrCheckUsername);
+        this.router.get('/get-gmail/:idUser', usuarioController.getGmail);
     }
 }
 

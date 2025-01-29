@@ -49,6 +49,26 @@ const correoController = {
       return res.status(500).json({ error: "Hubo un error al enviar el correo" });
     }
   },
+
+  async validarToken(req: Request, res: Response) {
+    try {
+      const { token } = req.body;
+  
+      if (!token) {
+        return res.status(400).json({ error: "El token es requerido" });
+      }
+  
+      const decoded: any = jwt.verify(token, process.env.JWT_SECRET || "default_secret");
+  
+      const userId = decoded.userId;
+      console.log("Token válido, usuario autenticado:", userId);
+  
+      return res.status(200).json({ message: "Autenticación exitosa", userId });
+    } catch (error: any) {
+      console.error("Error al validar el token:", error.message);
+      return res.status(401).json({ error: "Token inválido o expirado" });
+    }
+  }  
 };
 
 export default correoController;

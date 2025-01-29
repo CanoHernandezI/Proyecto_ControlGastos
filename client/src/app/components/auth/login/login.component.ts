@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
           this.correoService.enviarSuperToken(userId).subscribe(
             (response) => {
               console.log('Correo enviado:', response);
-              this.router.navigate(['/inicio-usuario']);
+              this.router.navigate(['/correo']);
               this.notificationService.showNotification('Inicio de sesión exitoso. Revisa tu correo.');
             },
             (error) => {

@@ -44,7 +44,7 @@ class Server {
         this.app.use('/api/tarjetas', tarjetaRoutes);
         this.app.use('/api/telegram', telegramRoutes); 
         this.app.use('/api', videoRoutes);
-        this.app.use("/api/correos", correoRoutes);
+        this.app.use('/api/correos', correoRoutes);
     }
 
     start(): void {

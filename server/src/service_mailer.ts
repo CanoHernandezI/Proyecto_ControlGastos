@@ -13,7 +13,6 @@ async function envioCorreo(userId: number) {
         }
 
         const info = await transporter.sendMail({
-<<<<<<< HEAD
             from: '"Pruebas" <luismanuelr245@gmail.com>', // sender address
             to: gmailRes, // list of receivers
             subject: "Hello word", // Subject line
@@ -22,16 +21,6 @@ async function envioCorreo(userId: number) {
            
           console.log("Correo enviado: %s", info.messageId);
     }catch(error){
-=======
-            from: '"Pruebas" <luismanuelr245@example.com>', // Asegúrate de usar un correo válido
-            to: gmailRes, // Lista de destinatarios
-            subject: "Hello World", // Asunto del correo
-            html: "<b>Hello world?</b>", // Cuerpo en HTML
-        });
-
-        console.log("Correo enviado: %s", info.messageId);
-    } catch (error) {
->>>>>>> 8491f37a2b39f49e05c7505cfab8a1ab59649615
         console.error("Error al enviar el correo:", error);
     }
 }

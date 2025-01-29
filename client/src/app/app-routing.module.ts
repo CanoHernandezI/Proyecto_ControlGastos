@@ -19,7 +19,7 @@ import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
-import { CorreoFormComponent } from './components/correo-form/correo-form.component';
+import { AuthTokenComponent } from './components/auth/correo-form/correo-form.component';
 import { PostTweetComponent } from './components/post-tweet/post-tweet.component';
 
 const routes: Routes = [
@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: "tarjeta", component: TarjetaComponent},
   { path: "finanzas", component: FinanzasComponent},
   { path: "spotify", component: SpotifyComponent},
-  { path: "correo", component: CorreoFormComponent},
+  { path: "correo", component: AuthTokenComponent},
   { path: "post-tweets", component: PostTweetComponent},
   { path: '**', redirectTo: '/' },
 ];

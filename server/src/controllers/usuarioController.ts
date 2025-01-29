@@ -70,26 +70,20 @@ class UsuarioController {
             }
         }
     }
+    // Método para obtener el correo basado en el ID del usuario
+public async getGmail(userId: number): Promise<string | null> {
+    try {
+        const result = await pool.query('SELECT Correo FROM Usuario WHERE IdUsuario = ?', [userId]); // Obtiene el correo
 
-    public async getGmail(userId: number): Promise<string | null> {
-        try {
-            console.log("Buscando correo para userId:", userId);
-            const result = await pool.query('SELECT Correo FROM Usuario WHERE IdUsuario = ?', [userId]);
-            console.log("Resultado de la consulta:", result);
-
-            if (result.length > 0) {
-                console.log("Correo encontrado:", result[0].Correo);
-                return result[0].Correo;
-            } else {
-                console.log("No se encontró un usuario con el IdUsuario proporcionado.");
-            }
-
-        } catch (error: any) {
-            console.error('Error al obtener el correo:', error.message);
-            console.error(error);
+        if (result.length > 0) {
+            return result[0].Correo; // Retorna el correo si se encuentra
         }
-        return null; 
+    } catch (error) {
+        console.error('Error al obtener el correo', error);
     }
+    return null;
+}
+
 }
 
 export const usuarioController = new UsuarioController();

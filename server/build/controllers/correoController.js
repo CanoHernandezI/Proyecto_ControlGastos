@@ -58,5 +58,23 @@ const correoController = {
             }
         });
     },
+    validarToken(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { token } = req.body;
+                if (!token) {
+                    return res.status(400).json({ error: "El token es requerido" });
+                }
+                const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || "default_secret");
+                const userId = decoded.userId;
+                console.log("Token válido, usuario autenticado:", userId);
+                return res.status(200).json({ message: "Autenticación exitosa", userId });
+            }
+            catch (error) {
+                console.error("Error al validar el token:", error.message);
+                return res.status(401).json({ error: "Token inválido o expirado" });
+            }
+        });
+    }
 };
 exports.default = correoController;

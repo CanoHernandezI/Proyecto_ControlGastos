@@ -44,7 +44,7 @@ class Server {
         this.app.use('/api/tarjetas', tarjetaRoutes_1.default);
         this.app.use('/api/telegram', telegramRoutes_1.default);
         this.app.use('/api', videoRoutes_1.default);
-        this.app.use("/api/correos", correoRoutes_1.default);
+        this.app.use('/api/correos', correoRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

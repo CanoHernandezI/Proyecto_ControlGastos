@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CorreoFormComponent } from './correo-form.component';
+import { AuthTokenComponent } from './correo-form.component';
 
 describe('CorreoFormComponent', () => {
-  let component: CorreoFormComponent;
-  let fixture: ComponentFixture<CorreoFormComponent>;
+  let component: AuthTokenComponent;
+  let fixture: ComponentFixture<AuthTokenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CorreoFormComponent]
+      declarations: [AuthTokenComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CorreoFormComponent);
+    fixture = TestBed.createComponent(AuthTokenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

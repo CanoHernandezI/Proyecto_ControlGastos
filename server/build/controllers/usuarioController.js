@@ -94,23 +94,17 @@ class UsuarioController {
             }
         });
     }
+    // Método para obtener el correo basado en el ID del usuario
     getGmail(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Buscando correo para userId:", userId);
-                const result = yield database_1.default.query('SELECT Correo FROM Usuario WHERE IdUsuario = ?', [userId]);
-                console.log("Resultado de la consulta:", result);
+                const result = yield database_1.default.query('SELECT Correo FROM Usuario WHERE IdUsuario = ?', [userId]); // Obtiene el correo
                 if (result.length > 0) {
-                    console.log("Correo encontrado:", result[0].Correo);
-                    return result[0].Correo;
-                }
-                else {
-                    console.log("No se encontró un usuario con el IdUsuario proporcionado.");
+                    return result[0].Correo; // Retorna el correo si se encuentra
                 }
             }
             catch (error) {
-                console.error('Error al obtener el correo:', error.message);
-                console.error(error);
+                console.error('Error al obtener el correo', error);
             }
             return null;
         });
