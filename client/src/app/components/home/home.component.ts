@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../../services/notification.service'; // Importa NotificationService
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,15 @@ import { NotificationService } from '../../services/notification.service'; // Im
 })
 export class HomeComponent implements OnInit {
   notificationMessage: string | null = null;
-  isMenuVisible: boolean = false; //Nuevo
+  isMenuVisible: boolean = false;
+  currentIndex: number = 0;
+
+  images = [
+    { src: 'assets/imagen1.jpg', text: '“Presupuesto claro, gastos bajo control.”' },
+    { src: 'assets/imagen2.jpg', text: '“ControlGastos: tu asistente personal para el dinero.”' },
+    { src: 'assets/imagen3.jpg', text: '“Cada gasto cuenta: regístralo y toma el control.”' },
+    { src: 'assets/imagen4.jpg', text: '“Revisa y ajusta: el camino hacia unas finanzas saludables.”' }
+  ];
 
   constructor(private notificationService: NotificationService) {}
 
@@ -18,7 +26,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  toggleMenu(): void { //Nuevo
+  toggleMenu(): void {
     this.isMenuVisible = !this.isMenuVisible;
+  }
+
+  nextImage(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+  }
+
+  prevImage(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
   }
 }

@@ -33,21 +33,13 @@
             <h4 class="fade-in">"Tranquilidad financiera: la cima está al alcance."</h4>
             <br>
             <div class="image-container">
-                <div class="card">
-                    <img src="assets/imagen1.jpg" alt="Image 1" class="card-image">
-                    <p class="card-text">“Presupuesto claro, gastos bajo control.”</p>
-                </div>
-                <div class="card">
-                    <img src="assets/imagen2.jpg" alt="Image 2" class="card-image">
-                    <p class="card-text">“ControlGastos: tu asistente personal para el dinero.”</p>
-                </div>
-                <div class="card">
-                    <img src="assets/imagen3.jpg" alt="Image 3" class="card-image">
-                    <p class="card-text">“Cada gasto cuenta: regístralo y toma el control.”</p>
-                </div>
-                <div class="card">
-                    <img src="assets/imagen4.jpg" alt="Image 4" class="card-image">
-                    <p class="card-text">“Revisa y ajusta: el camino hacia unas finanzas saludables.”</p>
+                <div class="carousel">
+                    <button class="carousel-button prev" (click)="prevImage()">&#10094;</button>
+                    <div class="card">
+                        <img [src]="images[currentIndex].src" alt="Image" class="card-image">
+                        <p class="card-text">{{ images[currentIndex].text }}</p>
+                    </div>
+                    <button class="carousel-button next" (click)="nextImage()">&#10095;</button>
                 </div>
             </div>
         </main>
