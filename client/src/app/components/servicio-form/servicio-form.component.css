@@ -269,3 +269,62 @@
 .Btn:active {
     transform: translate(2px, 2px);
 }
+
+  /* Estilos para los botones de acción */
+  .form-actions button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Estilos específicos del botón "Cancelar" */
+  .form-actions .cancel {
+    background-color: #6e6e6e;
+    color: #ffffff;
+  }
+  
+  .form-actions .cancel:hover {
+    background-color: #8a8a8a; /* Un tono más claro */
+    transform: scale(1.1); /* Efecto de zoom */
+  }
+  
+  /* Estilos específicos del botón "Guardar" */
+  .form-actions .submit {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .form-actions .submit:hover {
+    background-color: #333333; /* Un tono más claro */
+    transform: scale(1.1); /* Efecto de zoom */
+  }
+  
+/* Estilos del botón "Iniciar Sesión" */
+.button-submit {
+  margin: 20px 0 10px 0;
+  background-color: #151717;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Efecto de zoom y cambio de color al pasar el mouse */
+.button-submit:hover {
+  background-color: #252727; /* Un tono más claro */
+  transform: scale(1.1); /* Aumenta el tamaño en un 10% */
+}
+
+/* Efecto de presión cuando se hace clic */
+.button-submit:active {
+  transform: scale(0.95);
+}
