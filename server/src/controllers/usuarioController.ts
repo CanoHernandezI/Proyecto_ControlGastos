@@ -78,8 +78,8 @@ public async getGmail(userId: number): Promise<string | null> {
         if (result.length > 0) {
             return result[0].Correo; // Retorna el correo si se encuentra
         }
-    } catch (error) {
-        console.error('Error al obtener el correo', error);
+    } catch (error) { 
+        console.error('Error al obtener el correo', error);  //Error en caso de no encontrar el correo
     }
     return null;
 }
