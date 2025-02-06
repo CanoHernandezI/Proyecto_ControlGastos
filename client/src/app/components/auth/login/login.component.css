@@ -202,19 +202,33 @@ body {
 
 .button-submit {
   margin: 20px 0 10px 0;
-  background-color: #151717;
+  background-color: #171717; /* Cambiado a #171717 */
   border: none;
   color: white;
-  font-size: 15px;
+  font-size: 1.1em; /* Cambiado a 1.1em */
   font-weight: 500;
-  border-radius: 10px;
-  height: 50px;
-  width: 100%;
+  font-size: 20px;
+  border-radius: 5px; /* Cambiado a 5px */
+  height: 40px; /* Cambiado a 40px */
+  width: 100%; /* Cambiado a 130px */
   cursor: pointer;
+  transition: all .4s; /* Agregado */
 }
 
 .button-submit:hover {
-  background-color: #252727;
+  border-radius: 5px;
+  transform: translateY(-10px);
+  box-shadow: 0 7px 0 -2px #f85959,
+              0 15px 0 -4px #39a2db,
+              0 16px 10px -3px #39a2db;
+}
+
+.button-submit:active {
+  transition: all 0.2s;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 -2px #f85959,
+              0 8px 0 -4px #39a2db,
+              0 12px 10px -3px #39a2db;
 }
 
 .p {
@@ -242,7 +256,6 @@ body {
 
 .btn:hover {
   border: 1px solid #2d79f3;
-  ;
 }
 
 @media screen and (max-width: 768px) {

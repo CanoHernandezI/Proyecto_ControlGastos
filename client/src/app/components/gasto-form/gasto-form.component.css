@@ -138,7 +138,6 @@ body {
   font-family: sans-serif;
 }
 
-
 .form-group {
   display: flex;
   justify-content: flex-start;
@@ -161,12 +160,6 @@ body {
   box-sizing: border-box;
 }
 
-
-.form-actions button {
-  padding: 15px 30px;
-  font-family: sans-serif;
-}
-
 .form-actions {
   display: flex;
   justify-content: space-between;
@@ -174,25 +167,58 @@ body {
 }
 
 .form-actions button {
-  width: 48%;
-  padding: 15px 30px;
+  width: 48%; 
+  padding: 15px; 
   border: none;
-  border-radius: 4px;
+  border-radius: 5px; /* Cambiado a 5px */
   cursor: pointer;
+  transition: all .4s; /* Agregado */
 }
 
 .form-actions .cancel {
-  background-color: #6e6e6e;
+  background-color: #6e6e6e; /* Color de fondo original */
   color: #ffffff;
   font-weight: 600;
   font-family: sans-serif;
 }
 
 .form-actions .submit {
-  background-color: #000;
+  background-color: #171717; /* Cambiado a #171717 */
   color: #fff;
   font-weight: 600;
   font-family: sans-serif;
+}
+
+.form-actions .cancel:hover {
+  background-color: #5c5c5c; /* Cambiar el color al pasar el mouse */
+  transform: translateY(-10px);
+  box-shadow: 0 7px 0 -2px #f85959,
+              0 15px 0 -4px #39a2db,
+              0 16px 10px -3px #39a2db;
+}
+
+.form-actions .cancel:active {
+  transition: all 0.2s;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 -2px #f85959,
+              0 8px 0 -4px #39a2db,
+              0 12px 10px -3px #39a2db;
+}
+
+.form-actions .submit:hover {
+  border-radius: 5px;
+  transform: translateY(-10px);
+  box-shadow: 0 7px 0 -2px #f85959,
+              0 15px 0 -4px #39a2db,
+              0 16px 10px -3px #39a2db;
+}
+
+.form-actions .submit:active {
+  transition: all 0.2s;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 -2px #f85959,
+              0 8px 0 -4px #39a2db,
+              0 12px 10px -3px #39a2db;
 }
 
 .error-message {
@@ -272,33 +298,33 @@ body {
 
 @media screen and (max-width: 768px) {
   .logo span {
-    font-size: 20px;
-    font-weight: bold;
-    white-space: nowrap;
-    margin-left: 0px;
-    margin-top: 13px;
+      font-size: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+      margin-left: 0px;
+      margin-top: 13px;
   }
 
   .form-group {
-    flex-direction: column;
-    gap: 10px;
+      flex-direction: column;
+      gap: 10px;
   }
 
   .form-group input,
   .form-group select {
-    width: 100%;
+      width: 100%;
   }
 
   .form-actions {
-    flex-direction: column;
+      flex-direction: column;
   }
 
   .form-actions button {
-    width: 100%;
+      width: 100%;
   }
 
   .main-content .Btn {
-    margin-left: 0;
-    margin-top: 20px;
+      margin-left: 0;
+      margin-top: 20px;
   }
 }
