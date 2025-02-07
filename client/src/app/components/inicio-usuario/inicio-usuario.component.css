@@ -1147,3 +1147,221 @@ li:hover .tooltip {
   }
 }
 
+.floating-container-finhub {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 400px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 20px;
+  display: none;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.popup-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+/* CONTENEDOR DEL FORMULARIO */
+.form-container {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 500px;
+  margin: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.form-container:hover {
+  transform: scale(1.02);
+}
+
+/* GRUPO DE INPUT Y LABEL */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+/* ESTILOS DEL LABEL */
+.form-group label {
+  font-weight: bold;
+  color: #4a4a4a;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* CONTENEDOR DEL INPUT CON ÍCONO */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* INPUT MEJORADO */
+.input-field {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+/* ÍCONO DENTRO DEL INPUT */
+.input-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* EFECTO CUANDO EL USUARIO ESCRIBE */
+.input-field:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* CAMBIO DE COLOR DEL ÍCONO AL ESCRIBIR */
+.input-field:focus + .input-icon {
+  color: #007bff;
+}
+
+/* BOTÓN ESTILIZADO */
+.submit-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* HOVER DEL BOTÓN */
+.submit-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #003d80);
+  transform: scale(1.05);
+}
+
+/* EFECTO DE PRESIÓN AL HACER CLIC */
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .form-container {
+    width: 90%;
+  }
+
+  .input-field {
+    font-size: 14px;
+    padding: 10px 35px 10px 12px;
+  }
+
+  .submit-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+/* CONTENEDOR DE INFORMACIÓN FINANCIERA */
+.financial-info {
+  text-align: center;
+  margin-top: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* CONTENEDOR BLANCO */
+.white-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  margin: auto;
+  overflow-x: auto;
+}
+
+/* ESTILOS DE LA TABLA */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* CABECERA DE LA TABLA */
+.styled-table thead {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.styled-table th {
+  padding: 12px;
+  font-weight: bold;
+}
+
+/* CUERPO DE LA TABLA */
+.styled-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* FILAS INTERCALADAS */
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* HOVER EN FILAS */
+.styled-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* TEXTO CARGANDO */
+.loading-row {
+  font-weight: bold;
+  font-size: 18px;
+  color: #555;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .styled-table {
+    font-size: 14px;
+  }
+
+  .styled-table th, .styled-table td {
+    padding: 8px;
+  }
+}
