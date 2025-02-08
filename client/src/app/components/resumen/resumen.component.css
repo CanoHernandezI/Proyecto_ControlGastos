@@ -427,4 +427,20 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
+}/* Hace que la celda de descripción tenga un tamaño fijo y scroll cuando el texto es largo */
+td[data-label="Descripcion"] {
+  max-width: 200px; /* Ajusta el ancho según tu necesidad */
+  height: 50px; /* Altura fija */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Muestra "..." cuando el texto es demasiado largo */
+  white-space: nowrap; /* Evita que el texto se desborde */
+  cursor: pointer; /* Indica que se puede interactuar */
+}
+
+td[data-label="Descripcion"]:hover {
+  white-space: normal; /* Permite que el texto se expanda al pasar el mouse */
+  overflow: auto; /* Activa el scroll si es necesario */
+  max-height: 150px; /* Limita la expansión */
+  background: rgba(0, 0, 0, 0.05); /* Opcional: resalta la celda al expandirse */
+  padding: 5px;
 }
