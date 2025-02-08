@@ -25,10 +25,10 @@ import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
 import { PostTweetComponent } from './components/post-tweet/post-tweet.component';
 import { AuthTokenComponent } from './components/auth/correo-form/correo-form.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -51,11 +51,11 @@ registerLocaleData(localeEs, 'es');
         PaypalComponent,
         TarjetaComponent,
         SafeUrlPipe,
-        FinanzasComponent,
         SpotifyComponent,
         PostTweetComponent,
         PostTweetComponent,
-        AuthTokenComponent
+        AuthTokenComponent,
+        FooterComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

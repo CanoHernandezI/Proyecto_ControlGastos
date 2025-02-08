@@ -315,3 +315,29 @@ section h2 {
         font-size: 1.5em;
     }
 }
+
+/* Estilos de los botones dentro del menú desplegable "Rutas Guardadas" */
+.dropdown-content button {
+    background-color: #f9f9f9;
+    color: black;
+    padding: 10px;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: 500;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Efecto de zoom y cambio de color al pasar el mouse */
+.dropdown-content button:hover {
+    background-color: #e0e0e0; /* Un tono más claro */
+    transform: scale(1.05); /* Aumenta el tamaño en un 5% */
+}
+
+/* Efecto de presión cuando se hace clic */
+.dropdown-content button:active {
+    transform: scale(0.95);
+}

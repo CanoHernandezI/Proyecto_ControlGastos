@@ -1,12 +1,12 @@
-import nodemailer from "nodemailer"; // Corrección de importación
+import nodemailer from "nodemailer";
 
 export const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
-  secure: true, // true para el puerto 465, false para otros
+  secure: true, // true para el puerto 465, false para otros puertos
   auth: {
-    user: "luismanuelr245@gmail.com",
-    pass: "koon kkua inwp avjc", // Usa variables de entorno para mayor seguridad
+    user: "luismanuelr245@gmail.com",  // Correo Emisor
+    pass: "koon kkua inwp avjc",   //Contraseña de aplicacion
   },
   tls: {
     rejectUnauthorized: false,

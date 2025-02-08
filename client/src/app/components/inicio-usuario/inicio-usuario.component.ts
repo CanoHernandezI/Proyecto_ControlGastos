@@ -10,7 +10,7 @@ import { TelegramService } from '../../services/telegram.service';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/Usuario';
-
+import { FinancesService } from '../../services/finances.service';
 @Component({
   selector: 'app-inicio-usuario',
   templateUrl: './inicio-usuario.component.html',
@@ -39,6 +39,14 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   isMenuVisible: boolean = false;
   rolUsuario: string | null = null;
   isDarkMode: boolean = false;
+  isFinhubPopupVisible: boolean = false; // Nueva bandera para mostrar/ocultar popup de Finanzas
+  notificationMessage: string | null = null;
+  stockData: any; // Almacena los datos de la acción para la API de Finnhub
+  ticker: string = ''; // Cambia este valor según el ticker que desees consultar para la API de Finnhub
+  loading: boolean = false; // Para manejar el estado de carga para la API de Finnhub 
+  recommendations: any; //Para las recomendaciones del mercado API Finnhub
+  companyNews: any;  //Para la compania de la que se desea ver la noticias 
+  receiveMessage: any;
 
   suggestions: string[] = [
     "Cómo hacer un presupuesto",
@@ -75,6 +83,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
     private videoService: VideoService,
     private usuarioService: UsuarioService,
     private router: Router,
+    private stockService: FinancesService, //Servicio de finhub (finanzas).
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -357,8 +366,65 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       document.body.classList.remove('dark-mode');
     }
   }
-  
-  
+
+  //Api de FinHube
+  toggleFinhubPopup(): void {
+    this.isFinhubPopupVisible = !this.isFinhubPopupVisible;
+  }
+
+  // Consulta de datos financieros
+  fetchStockData(ticker: string) {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.stockService.getStockData(ticker).subscribe(
+      (data: any) => {
+        this.stockData = data;
+        this.loading = false;
+      },
+      (error) => {
+        this.errorMessage = error;
+        this.loading = false;
+      }
+    );
+  }
+
+  fetchRecommendationTrends(ticker: string) {
+    this.loading = true;
+    this.stockService.getRecommendationTrends(ticker).subscribe(
+      (recommendations: any) => {
+        this.recommendations = recommendations;
+        this.loading = false;
+      },
+      (error) => {
+        this.errorMessage = error;
+        this.loading = false;
+      }
+    );
+  }
+
+  fetchRecentCompanyNews(ticker: string) {
+    this.loading = true;
+    this.stockService.getRecentCompanyNews(ticker).subscribe(
+      (news: any) => {
+        this.companyNews = news;
+        this.loading = false;
+      },
+      (error) => {
+        this.errorMessage = error;
+        this.loading = false;
+      }
+    );
+  }
+
+  onSubmit() {
+    if (this.ticker) {
+      this.fetchStockData(this.ticker);
+      this.fetchRecommendationTrends(this.ticker);
+      this.fetchRecentCompanyNews(this.ticker);
+      this.searchPerformed = true;
+    }
+  }
 }
 
 

@@ -104,7 +104,7 @@ class UsuarioController {
                 }
             }
             catch (error) {
-                console.error('Error al obtener el correo', error);
+                console.error('Error al obtener el correo', error); //Error en caso de no encontrar el correo
             }
             return null;
         });

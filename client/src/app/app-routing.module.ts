@@ -17,7 +17,6 @@ import { SoporteTecnicoComponent } from './components/soporte-tecnico/soporte-te
 import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
-import { FinanzasComponent } from './components/finanzas/finanzas.component';
 import { SpotifyComponent } from './components/spotify/spotify.component';
 import { AuthTokenComponent } from './components/auth/correo-form/correo-form.component';
 import { PostTweetComponent } from './components/post-tweet/post-tweet.component';
@@ -42,7 +41,6 @@ const routes: Routes = [
   { path: "ubicacion", component: UbicacionComponent},
   { path: "paypal", component: PaypalComponent},
   { path: "tarjeta", component: TarjetaComponent},
-  { path: "finanzas", component: FinanzasComponent},
   { path: "spotify", component: SpotifyComponent},
   { path: "correo", component: AuthTokenComponent},
   { path: "post-tweets", component: PostTweetComponent},

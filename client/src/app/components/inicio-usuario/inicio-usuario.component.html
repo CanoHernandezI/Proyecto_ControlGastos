@@ -66,12 +66,12 @@
                 </div>
                 <div class="text">PayPal</div>
             </button>
-            <button class="Btn finhub" routerLink="/finanzas">
+            <button class="Btn finhub" (click)="toggleFinhubPopup()">
                 <div class="sign">
-                    <i class="fas fa-cloud"></i>
+                  <i class="fas fa-chart-line"></i>
                 </div>
                 <div class="text">FinHub</div>
-            </button>
+            </button>              
             <button class="Btn spotify" routerLink="/spotify">
                 <div class="sign">
                     <i class="fab fa-spotify"></i>
@@ -105,6 +105,118 @@
                 <hr>
             </div>
         </div>
+        <div class="floating-container-finhub" id="finhub-popup" 
+            [style.display]="isFinhubPopupVisible ? 'block' : 'none'">
+        <div class="popup-header">
+            <button (click)="toggleFinhubPopup()" class="close-btn">&times;</button>
+        </div>
+
+        <div class="popup-content">
+            <h1>Consulta una Acción Financiera</h1>
+            <div class="white-container">
+                <form (ngSubmit)="onSubmit()" class="form-container">
+                    <div class="form-group">
+                      <label for="ticker">📈 Nombre de la acción a consultar:</label>
+                      <div class="input-wrapper">
+                        <input type="text" id="ticker" [(ngModel)]="ticker" name="ticker" required class="input-field" placeholder="Ej: AAPL, TSLA, MSFT">
+                        <i class="fas fa-search input-icon"></i>
+                      </div>
+                    </div>
+                  
+                    <button type="submit" class="submit-btn">
+                      <i class="fas fa-chart-line"></i> Consultar
+                    </button>
+                  </form>                                 
+            </div>
+            
+            <div *ngIf="searchPerformed" class="financial-info">
+                <h2>📊 Información Financiera: {{ ticker }}</h2>
+              
+                <div class="white-container">
+                  <table class="styled-table">
+                    <thead>
+                      <tr>
+                        <th>📌 Precio Actual</th>
+                        <th>📈 Precio Alto del Día</th>
+                        <th>📉 Precio Bajo del Día</th>
+                        <th>🟢 Precio de Apertura</th>
+                        <th>🔴 Precio de Cierre Anterior</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!loading && stockData">
+                        <td><strong>{{ stockData.c | number: '1.2-2' }}</strong> USD</td>
+                        <td><strong>{{ stockData.h | number: '1.2-2' }}</strong> USD</td>
+                        <td><strong>{{ stockData.l | number: '1.2-2' }}</strong> USD</td>
+                        <td><strong>{{ stockData.o | number: '1.2-2' }}</strong> USD</td>
+                        <td><strong>{{ stockData.pc | number: '1.2-2' }}</strong> USD</td>
+                      </tr>
+                      <tr *ngIf="loading">
+                        <td colspan="5" class="loading-row">⏳ Cargando información...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>   
+              <br>
+              <div *ngIf="recommendations && recommendations.length > 0" class="recommendation-section">
+                <h2>📊 Tendencias de Recomendación: {{ ticker }}</h2>
+              
+                <div class="white-container">
+                  <table class="styled-table">
+                    <thead>
+                      <tr>
+                        <th>📅 Periodo</th>
+                        <th>🟢 Comprar</th>
+                        <th>🔴 Vender</th>
+                        <th>🟡 Conservar</th>
+                        <th>✅ Compra Fuerte</th>
+                        <th>❌ Venta Fuerte</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let recommendation of recommendations">
+                        <td><strong>{{ recommendation.period }}</strong></td>
+                        <td class="buy-cell">{{ recommendation.buy }}</td>
+                        <td class="sell-cell">{{ recommendation.sell }}</td>
+                        <td class="hold-cell">{{ recommendation.hold }}</td>
+                        <td class="strong-buy-cell">{{ recommendation.strongBuy }}</td>
+                        <td class="strong-sell-cell">{{ recommendation.strongSell }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            <br>
+            <div *ngIf="companyNews && companyNews.length > 0" class="news-section">
+                <h2>📰 Noticias Recientes en Finanzas</h2>
+              
+                <div class="white-container">
+                  <table class="styled-table">
+                    <thead>
+                      <tr>
+                        <th>📢 Titular</th>
+                        <th>📌 Resumen</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let article of companyNews">
+                        <td>
+                          <strong>{{ article.headline }}</strong>
+                        </td>
+                        <td>
+                          {{ article.summary }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+        </div>
+        </div>
+
         <div class="floating-container-youtube main" id="youtube-popup"
             [style.display]="isYoutubePopupVisible ? 'block' : 'none'">
             <div class="currentplaying">
@@ -151,7 +263,6 @@
                     <button (click)="sendMessage()">Enviar</button>
                 </div>
             </div>
-
         </div>
         <div class="floating-container-google" id="google-popup"
             [style.display]="isGooglePopupVisible ? 'block' : 'none'">
@@ -245,9 +356,8 @@
                   </div>
                 </div>
               </section>
-              
         </main>
+        <app-footer></app-footer> 
     </div>
 </body>
-
 </html>

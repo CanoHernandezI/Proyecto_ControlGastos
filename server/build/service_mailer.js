@@ -25,10 +25,10 @@ function envioCorreo(userId) {
                 return;
             }
             const info = yield mailer_config_1.transporter.sendMail({
-                from: '"Pruebas" <luismanuelr245@gmail.com>', // sender address
-                to: gmailRes, // list of receivers
-                subject: "Hello word", // Subject line
-                html: "<b>Hello world?</b>", // html body
+                from: '"Pruebas" <luismanuelr245@gmail.com>', // Correo Emisor
+                to: gmailRes, // Correo Receptor
+                subject: "Hello word", // Correo Base
+                html: "<b>Hello world?</b>", // Correo Base
             });
             console.log("Correo enviado: %s", info.messageId);
         }
