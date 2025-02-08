@@ -35,10 +35,11 @@ export class RegistrarseComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private notificationService: NotificationService  
+    private notificationService: NotificationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   togglePasswordVisibility(field: string): void {
     if (field === 'contrasena') {
@@ -146,4 +147,5 @@ export class RegistrarseComponent implements OnInit {
       );
     }
   }
+
 }

@@ -428,3 +428,78 @@ body {
   }
   
 }
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.type-filter-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.button_filter {
+  font-family: sans-serif;
+  padding: 8px 15px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #270d0a8e;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: medium;
+  color: #fff2cc;
+}
+
+.filter-dropdown input[type="date"] {
+  font-family: sans-serif;
+  padding: 8px 15px;
+  color: #fff2cc;
+  border: 2px solid #262f57;
+  border-radius: 5px;
+  background-color: #270d0a8e;
+  font-weight: 600;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.filter-dropdown input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #fff2cc;
+  background-color: #270d0a8e;
+}
+
+.type-filter-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.type-filter-dropdown .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.type-filter-dropdown .dropdown-content a:hover {
+  background-color: #8b8b8b;
+}
+
+.type-filter-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.type-filter-dropdown:hover .button_filter {
+  background-color: #00000094;
+}

@@ -10,6 +10,226 @@ body {
   overflow-x: hidden;
 }
 
+/* Estilos para el modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .header {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .navbar {
+  background-color: #121212;
+}
+
+.dark-mode .nav-links a {
+  color: #ffffff;
+}
+
+.dark-mode .nav-links a:hover {
+  color: #888;
+}
+
+.dark-mode .welcome-bar {
+  background-color: #333;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+.dark-mode .main-content {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode section {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #444;
+}
+
+.dark-mode .card .front {
+  background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+.dark-mode .card .back {
+  background: linear-gradient(135deg, #1c1c1c, #121212);
+}
+
+.dark-mode .card .back h2,
+.dark-mode .card .back p {
+  color: #ffffff;
+}
+
+.dark-mode .card .back .enlace a {
+  background-color: #ffffff;
+  color: #1c1c1c;
+}
+
+.dark-mode .card .back .enlace a:hover {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .floating-container {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+}
+
+.dark-mode #tweets-popup {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode #tweets-popup h3 {
+  color: #ffffff;
+}
+
+.dark-mode #tweets-popup p {
+  color: #ffffff;
+}
+
+.dark-mode #tweets-popup small {
+  color: #888;
+}
+
+.dark-mode .floating-window {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+}
+
+.dark-mode .floating-map {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+}
+
+.dark-mode .floating-container-youtube {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .floating-container-youtube h3 {
+  color: #ffffff;
+}
+
+.dark-mode .floating-container-telegram {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .floating-container-telegram h3 {
+  color: #ffffff;
+}
+
+.dark-mode .chat-card {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .chat-header {
+  background-color: #333;
+}
+
+.dark-mode .chat-body {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .message {
+  background-color: #333;
+  color: #ffffff;
+}
+
+.dark-mode .incoming {
+  background-color: #444;
+}
+
+.dark-mode .outgoing {
+  background-color: #555;
+}
+
+.dark-mode .chat-footer input[type="text"] {
+  background-color: #333;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+.dark-mode .chat-footer button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.dark-mode .chat-footer button:hover {
+  background-color: #0056b3;
+}
+
+.dark-mode .floating-container-google {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .searchbar {
+  background-color: #333;
+  border: 1px solid #444;
+}
+
+.dark-mode .searchbar-input {
+  color: #ffffff;
+}
+
+.dark-mode .searchbar-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+.dark-mode .searchbar-button:hover {
+  background-color: #45a049;
+}
+
+.dark-mode .search-result-item h3 {
+  color: #ffffff;
+}
+
+.dark-mode .search-result-item p {
+  color: #888;
+}
+
+.dark-mode .search-result-item a {
+  color: #1a73e8;
+}
+
+.dark-mode .search-result-item a:hover {
+  color: #1557b3;
+}
+
+.dark-mode .search-result-divider {
+  border-top: 1px solid #444;
+}
+
+.dark-mode .menu-toggle {
+  color: #ffffff;
+}
+
+.dark-mode .nav-links.show {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .nav-links.show a {
+  color: #ffffff;
+}
+
+.dark-mode .nav-links.show a:hover {
+  color: #888;
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: white;
+}
+
 .container {
   display: flex;
   flex-direction: column;

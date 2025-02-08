@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
   notificationMessage: string | null = null;
   isMenuVisible: boolean = false;
   currentIndex: number = 0;
+  isDarkMode: boolean = false;
 
   images = [
     { src: 'assets/imagen1.jpg', text: '“Presupuesto claro, gastos bajo control.”' },

@@ -29,10 +29,24 @@
     </div>
     <main class="main-content">
       <h1>Resumen Gastos</h1>
-      <div class="dropdown">
-        <button class="button_descargar" (click)="createPdf()">Descargar PDF</button>
-      </div>
+      
+      <button class="button_descargar" (click)="createPdf()">Descargar PDF</button>
       <div class="white-container">
+        <div class="filters">
+          <div class="filter-dropdown">
+            <input type="date" (change)="onDateSelected($event)" class="button_filter">
+          </div>
+          <div class="type-filter-dropdown">
+            <button class="button_filter">Filtrar por Tipo</button>
+            <div class="dropdown-content">
+              <a (click)="filterByType('all')">Todo</a>
+              <a (click)="filterByType('Gasto')">Gastos</a>
+              <a (click)="filterByType('Ingreso')">Ingresos</a>
+              <a (click)="filterByType('Servicio')">Servicios</a>
+            </div>
+          </div>
+          
+        </div>
         <table class="expenses-table">
           <thead>
             <tr>

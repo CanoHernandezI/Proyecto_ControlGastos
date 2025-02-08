@@ -9,6 +9,62 @@ body {
   margin: 0;
 }
 
+/* Estilos para el modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .header {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .navbar {
+  background-color: #121212;
+}
+
+.dark-mode .main-content {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .welcome-bar {
+  background-color: #333;
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #333;
+  border-color: #444;
+}
+
+.dark-mode .card:hover {
+  background-color: #444;
+}
+
+.dark-mode .carousel-button {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000;
+}
+
+.dark-mode .nav-links a {
+  color: #ffffff;
+}
+
+.dark-mode .nav-links a:hover {
+  color: #888;
+}
+
+/* Estilos para el botón de modo oscuro */
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: white;
+}
+
 .container {
   display: flex;
   flex-direction: column;

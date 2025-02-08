@@ -190,39 +190,6 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  filterGastos(periodo: string) {
-    if (periodo === 'all') {
-      this.resumen = [...this.resumenOriginal]; // Restaura los datos originales
-    } else {
-      const now = new Date();
-      let filteredData: any[] = [];
-
-      switch (periodo) {
-        case 'day':
-          const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-          filteredData = this.resumenOriginal.filter(item => new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio) >= startOfDay);
-          break;
-        case 'week':
-          const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-          filteredData = this.resumenOriginal.filter(item => new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio) >= startOfWeek);
-          break;
-        case 'month':
-          const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-          filteredData = this.resumenOriginal.filter(item => new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio) >= startOfMonth);
-          break;
-        case 'year':
-          const startOfYear = new Date(now.getFullYear(), 0, 1);
-          filteredData = this.resumenOriginal.filter(item => new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio) >= startOfYear);
-          break;
-        default:
-          filteredData = this.resumenOriginal;
-          break;
-      }
-
-      this.resumen = filteredData;
-    }
-  }
-
   filterByType(type: string) {
     if (type === 'all') {
       this.resumen = [...this.resumenOriginal];

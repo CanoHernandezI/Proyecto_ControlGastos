@@ -9,6 +9,90 @@ body {
   margin: 0;
 }
 
+/* Estilos para el modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .header {
+  background-color: #1c1c1c;
+}
+
+.dark-mode .navbar {
+  background-color: #121212;
+}
+
+.dark-mode .nav-links a {
+  color: #ffffff;
+}
+
+.dark-mode .nav-links a:hover {
+  color: #888;
+}
+
+.dark-mode .welcome-bar {
+  background-color: #333;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+.dark-mode .main-content {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.dark-mode .form-grid {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #444;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group select {
+  background-color: #333;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+.dark-mode .form-actions .cancel {
+  background-color: #555;
+  color: #ffffff;
+}
+
+.dark-mode .form-actions .submit {
+  background-color: #333;
+  color: #ffffff;
+}
+
+.dark-mode .form-actions .cancel:hover {
+  background-color: #666;
+}
+
+.dark-mode .form-actions .submit:hover {
+  background-color: #444;
+}
+
+.dark-mode .error-message {
+  color: #ff6b6b;
+}
+
+.dark-mode .Btn {
+  background-color: #30ab39;
+}
+
+.dark-mode .Btn:hover {
+  background-color: #2a8a32;
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: white;
+}
+
 .container {
   display: flex;
   flex-direction: column;

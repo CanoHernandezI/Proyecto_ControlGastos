@@ -38,6 +38,7 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
   errorMessage: string | null = null;
   isMenuVisible: boolean = false;
   rolUsuario: string | null = null;
+  isDarkMode: boolean = false;
 
   suggestions: string[] = [
     "Cómo hacer un presupuesto",
@@ -345,6 +346,15 @@ export class InicioUsuarioComponent implements OnInit, AfterViewInit {
       body.classList.add('no-scroll'); // Bloquea el scroll
     } else {
       body.classList.remove('no-scroll'); // Permite el scroll
+    }
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
     }
   }
   
