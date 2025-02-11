@@ -430,14 +430,22 @@ body {
 }
 
 .filters {
+
   display: flex;
-  gap: 10px;
+
+  gap: 0; /* Elimina el espacio entre los botones */
+
   margin-bottom: 20px;
+
 }
 
-.filter-dropdown {
-  position: relative;
-  display: inline-block;
+
+.filter-dropdown,
+
+.type-filter-dropdown {
+
+  margin: 0; /* Asegúrate de que no haya margen */
+
 }
 
 .type-filter-dropdown {
@@ -450,13 +458,30 @@ body {
   padding: 8px 15px;
   color: black;
   border: none;
-  border-radius: 5px;
+  border-radius: 0;
   cursor: pointer;
   background-color: #270d0a8e;
   font-family: sans-serif;
   font-weight: 600;
   font-size: medium;
   color: #fff2cc;
+}
+
+.button_filter:first-child {
+
+  border-top-left-radius: 5px; /* Redondea la esquina superior izquierda */
+
+  border-bottom-left-radius: 5px; /* Redondea la esquina inferior izquierda */
+
+}
+
+
+.button_filter:last-child {
+
+  border-top-right-radius: 5px; /* Redondea la esquina superior derecha */
+
+  border-bottom-right-radius: 5px; /* Redondea la esquina inferior derecha */
+
 }
 
 .filter-dropdown input[type="date"] {

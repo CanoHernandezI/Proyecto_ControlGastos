@@ -200,14 +200,17 @@ export class ResumenComponent implements OnInit {
 
   onDateSelected(event: any) {
     const selectedDate = new Date(event.target.value);
-    selectedDate.setHours(0, 0, 0, 0); 
+    selectedDate.setHours(0, 0, 0, 0); // Asegúrate de que la hora sea 00:00:00
   
     this.resumen = this.resumenOriginal.filter(item => {
       const itemDate = new Date(item.FechaTransaccion || item.FechaIngreso || item.FechaServicio);
-      itemDate.setHours(0, 0, 0, 0); 
+      itemDate.setHours(0, 0, 0, 0); // Asegúrate de que la hora sea 00:00:00
   
+      // Compara solo la parte de la fecha
       return (
-        itemDate.getTime() === selectedDate.getTime() 
+        itemDate.getFullYear() === selectedDate.getFullYear() &&
+        itemDate.getMonth() === selectedDate.getMonth() &&
+        itemDate.getDate() === selectedDate.getDate()
       );
     });
   }
